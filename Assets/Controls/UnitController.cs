@@ -33,6 +33,7 @@ namespace RTS
 
         private void Update()
         {
+            RaycastForSelection();
             SelectUnits();
         }
 
@@ -40,7 +41,6 @@ namespace RTS
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastForSelection();
                 mousePos1 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                 selectionController.SelectionState();
             }
@@ -54,7 +54,6 @@ namespace RTS
             }
             if (Input.GetMouseButtonDown(1))
             {
-                RaycastForSelection();
                 selectionController.AssignAction();
             }
         }

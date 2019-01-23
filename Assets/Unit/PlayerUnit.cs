@@ -50,23 +50,12 @@ namespace RTS
             if (!hit.collider.GetComponent<EnemyUnit>())
             {
                 Vector3 location = hit.point;
+                unitCombat.Target(null);
                 agent.SetDestination(location);
             }
             else
             {
                 unitCombat.Target(hit.collider.gameObject);
-            }
-        }
-
-        private void SetValidTarget(GameObject _target)
-        {
-            if (_target.GetComponent<EnemyUnit>())
-            {
-                unitCombat.Target(_target);
-            }
-            else
-            {
-
             }
         }
 

@@ -12,11 +12,11 @@ namespace RTS
         private void Start()
         {
             FindObjectOfType<UnitSelectionController>().updateSelectedUnits += UpdatePanel;
-            selectedUnitsPanel = GetChildren();
         }
 
         private void UpdatePanel(List<GameObject> selectedUnits)
         {
+            selectedUnitsPanel = GetChildren();
             if (selectedUnitsPanel.Count != selectedUnits.Count)
             {
                 CreateNewUnitIcons(selectedUnits);
@@ -34,9 +34,9 @@ namespace RTS
 
         private void DestroyOldIcons()
         {
-            foreach (Transform t in transform)
+            foreach (Transform child in transform)
             {
-                Destroy(t.gameObject);
+                Destroy(child.gameObject);
             }
         }
 

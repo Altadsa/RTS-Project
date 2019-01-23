@@ -14,6 +14,8 @@ namespace RTS
         [HideInInspector]
         public List<GameObject> selectableUnits;
 
+        Building selectedBuilding;
+
         public delegate void OnUpdateSelectedUnits(List<GameObject> selectedUnits);
         public event OnUpdateSelectedUnits updateSelectedUnits;
 
@@ -27,6 +29,14 @@ namespace RTS
             GetComponent<UnitController>().updateLayer += UpdateLayer;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) || selectedUnits.Count > 0)
+            {
+                DeselectBuilding();
+            }
+        }
+
         private void UpdateLayer(Layer newLayer, RaycastHit _layerHit)
         {
             currentLayer = newLayer;
@@ -35,7 +45,7 @@ namespace RTS
         }
 
         public void SelectionState()
-        { 
+        {
             switch (currentLayer)
             {
                 case Layer.Units:
@@ -135,13 +145,24 @@ namespace RTS
                 selectedUnits.Clear();
                 updateSelectedUnits(selectedUnits);
             }
+
         }
 
         private void SelectBuilding()
         {
             DeselectAllUnits();
             Building building = hitGO.GetComponent<Building>();
-            building.LoadBuildingData();
+            selectedBuilding = building;
+            selectedBuilding.Select();
+        }
+
+        private void DeselectBuilding()
+        {
+            if (selectedBuilding)
+            {
+                selectedBuilding.Deselect();
+                selectedBuilding = null;
+            }
         }
 
         public void AssignAction()
@@ -149,5 +170,5 @@ namespace RTS
             if (assignAction == null) { return; }
             assignAction(layerHit);
         }
-    } 
+    }
 }

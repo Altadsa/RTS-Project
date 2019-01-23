@@ -9,6 +9,18 @@ namespace RTS
         public GameObject[] unitPrefabs;
         GameObject spawnPoint;
 
+        public void Select()
+        {
+            GetComponentInChildren<Projector>().enabled = true;
+            LoadBuildingData();
+        }
+
+        public void Deselect()
+        {
+            GetComponentInChildren<Projector>().enabled = false;
+            UserInterface.ClearBuildMenu();
+        }
+
         public void LoadBuildingData()
         {
             GameObject buildingWindow = GameObject.FindGameObjectWithTag("Build Panel");
