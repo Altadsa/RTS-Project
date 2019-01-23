@@ -176,9 +176,9 @@ MonoBehaviour:
   buildButton: {fileID: 4402161216455222231, guid: 76330bacf47c13b4da9570436761386f,
     type: 3}
   unitPrefabs:
-  - {fileID: 8873932115636542036, guid: e1ede4053e00a924788921d2423829f5, type: 3}
-  - {fileID: 8873932115636542036, guid: 661322bae29f74e4188bb048d958a223, type: 3}
-  - {fileID: 8873932115636542036, guid: 701d95fc331c8ef4fbc17f53c8a59bbe, type: 3}
+  - {fileID: 11400000, guid: 79d78fd86022b2d4ca2a7f7e2100232d, type: 2}
+  - {fileID: 11400000, guid: 812084b1df0f5444b91e070d0f330515, type: 2}
+  - {fileID: 11400000, guid: bb34decc1c15ac04ab9f71cb8af7b14d, type: 2}
 --- !u!64 &8175677501695984902
 MeshCollider:
   m_ObjectHideFlags: 0

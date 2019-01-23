@@ -6,7 +6,7 @@ namespace RTS
     public class Building : MonoBehaviour
     {
         public GameObject buildButton;
-        public GameObject[] unitPrefabs;
+        public UnitBuildData[] unitPrefabs;
         GameObject spawnPoint;
 
         public void Select()
@@ -34,11 +34,11 @@ namespace RTS
 
         private void SetupButtons(GameObject windowToSetup)
         {
-            foreach (GameObject unitInstance in unitPrefabs)
+            foreach (UnitBuildData unitInstance in unitPrefabs)
             {
                 GameObject buttonInstance = Instantiate(buildButton, windowToSetup.GetComponent<RectTransform>());
                 buttonInstance.GetComponentInChildren<Text>().text = unitInstance.name;
-                buttonInstance.GetComponent<Button>().onClick.AddListener(delegate { SpawnUnit(unitInstance); });
+                buttonInstance.GetComponent<Button>().onClick.AddListener(delegate { SpawnUnit(unitInstance.Unit); });
             }
         }
 
