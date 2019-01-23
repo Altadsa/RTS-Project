@@ -3,24 +3,37 @@ using UnityEngine;
 
 namespace RTS
 {
+    [RequireComponent(typeof(UnitCombat))]
     public class PlayerUnit : Unit
     {
-        UnitController controller;
+        UnitSelectionController selectionController;
+        UnitCombat unitCombat;
 
         [HideInInspector]
         public bool isSelected = false;
 
         private void Start()
         {
-            controller = FindObjectOfType<UnitController>();
+            SetupUnit();
+        }
+
+        private void SetupUnit()
+        {
+            selectionController = FindObjectOfType<UnitSelectionController>();
+            unitCombat = GetComponent<UnitCombat>();
             agent = GetComponent<NavMeshAgent>();
-            if (controller)
+            if (selectionController)
             {
-                controller.selectableUnits.Add(gameObject);
+                selectionController.selectableUnits.Add(gameObject);
             }
         }
 
         private void Update()
+        {
+            ActivateProjector();
+        }
+
+        private void ActivateProjector()
         {
             if (isSelected)
             {
@@ -32,23 +45,41 @@ namespace RTS
             }
         }
 
-        private void OnDestroy()
-        {
-            if (controller)
+        private void OnActionAssigned(RaycastHit hit)
+        { 
+            if (!hit.collider.GetComponent<EnemyUnit>())
             {
-                controller.onRightMbClicked -= OnRightMbClicked;
-                controller.onAttackTargetFound -= Target;
+                Vector3 location = hit.point;
+                agent.SetDestination(location);
+            }
+            else
+            {
+                unitCombat.Target(hit.collider.gameObject);
             }
         }
 
-        public void Target(GameObject _target)
+        private void SetValidTarget(GameObject _target)
         {
-            GetComponent<UnitCombat>().Target(_target);
+            if (_target.GetComponent<EnemyUnit>())
+            {
+                unitCombat.Target(_target);
+            }
+            else
+            {
+
+            }
         }
 
-        public void OnRightMbClicked(Vector3 dest)
+        public void Select()
         {
-            agent.SetDestination(dest);
+            isSelected = true;
+            selectionController.assignAction += OnActionAssigned;
+        }
+
+        public void Deselect()
+        {
+            isSelected = false;
+            selectionController.assignAction -= OnActionAssigned;
         }
     } 
 }
