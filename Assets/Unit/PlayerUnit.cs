@@ -28,6 +28,11 @@ namespace RTS
             }
         }
 
+        private void OnDestroy()
+        {
+            selectionController.selectableUnits.Remove(gameObject);
+        }
+
         private void Update()
         {
             ActivateProjector();

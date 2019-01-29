@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\IMVS1709121\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\IMVS1709121\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_RTS Prototype.-1217322227.00" t="ExcludeRecursive" />
+    <e p="D:\Unity Projects\RTS Prototype" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="AdditiveTint.shader" t="Include" />
+        <e p="Buildings" t="Include">
+          <e p="Building.cs" t="Include" />
+          <e p="BuildingHealth.cs" t="Include" />
+          <e p="BuildingMenu.cs" t="Include" />
+          <e p="BuildingUI.cs" t="Include" />
+          <e p="Tower.cs" t="Include" />
+          <e p="UnitBuildData.cs" t="Include" />
+        </e>
+        <e p="Controls" t="Include">
+          <e p="CameraControls.cs" t="Include" />
+          <e p="MouseCursor.cs" t="Include" />
+          <e p="UnitActionController.cs" t="Include" />
+          <e p="UnitController.cs" t="Include" />
+          <e p="UnitSelectionController.cs" t="Include" />
+        </e>
+        <e p="EnemyUnit.cs" t="Include" />
+        <e p="Layer.cs" t="Include" />
+        <e p="TextMesh Pro" t="Include">
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Unit" t="Include">
+          <e p="PlayerUnit.cs" t="Include" />
+          <e p="Unit.cs" t="Include" />
+          <e p="UnitCombat.cs" t="Include" />
+          <e p="UnitHealth.cs" t="Include" />
+          <e p="UnitSelectionBox.cs" t="Include" />
+          <e p="UnitUI.cs" t="Include" />
+        </e>
+        <e p="UnitPanel.cs" t="Include" />
+        <e p="UserInterface.cs" t="Include" />
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="RTS Prototype.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>

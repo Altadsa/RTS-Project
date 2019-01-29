@@ -6,15 +6,15 @@ namespace RTS
 {
     public class UnitSelectionController : MonoBehaviour
     {
-        Layer currentLayer;
-        RaycastHit layerHit;
-        GameObject hitGO;
+        Layer _currentLayer;
+        RaycastHit _layerHit;
+        GameObject _hitGo;
 
-        List<GameObject> selectedUnits;
+        List<GameObject> _selectedUnits;
         [HideInInspector]
         public List<GameObject> selectableUnits;
 
-        Building selectedBuilding;
+        Building _selectedBuilding;
 
         public delegate void OnUpdateSelectedUnits(List<GameObject> selectedUnits);
         public event OnUpdateSelectedUnits updateSelectedUnits;
@@ -24,14 +24,14 @@ namespace RTS
 
         private void Awake()
         {
-            selectedUnits = new List<GameObject>();
+            _selectedUnits = new List<GameObject>();
             selectableUnits = new List<GameObject>();
             GetComponent<UnitController>().updateLayer += UpdateLayer;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) || selectedUnits.Count > 0)
+            if (Input.GetKeyDown(KeyCode.Escape) || _selectedUnits.Count > 0)
             {
                 DeselectBuilding();
             }
@@ -39,14 +39,14 @@ namespace RTS
 
         private void UpdateLayer(Layer newLayer, RaycastHit _layerHit)
         {
-            currentLayer = newLayer;
-            layerHit = _layerHit;
-            hitGO = layerHit.collider.gameObject;
+            _currentLayer = newLayer;
+            this._layerHit = _layerHit;
+            _hitGo = this._layerHit.collider.gameObject;
         }
 
         public void SelectionState()
         {
-            switch (currentLayer)
+            switch (_currentLayer)
             {
                 case Layer.Units:
                     SelectUnitHit();
@@ -64,7 +64,7 @@ namespace RTS
 
         private void SelectUnitHit()
         {
-            PlayerUnit iUnit = hitGO.GetComponent<PlayerUnit>();
+            PlayerUnit iUnit = _hitGo.GetComponent<PlayerUnit>();
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 if (!iUnit.isSelected)
@@ -108,67 +108,78 @@ namespace RTS
                     removableUnits.Add(iUnit);
                 }
 
-                if (removableUnits.Count > 0)
+                if (removableUnits.Count <= 0) continue;
+                foreach (GameObject removableUnit in removableUnits)
                 {
-                    foreach (GameObject removableUnit in removableUnits)
-                    {
-                        selectableUnits.Remove(removableUnit);
-                    }
-                    removableUnits.Clear();
+                    selectableUnits.Remove(removableUnit);
                 }
+                removableUnits.Clear();
             }
         }
 
         private void SelectUnit(PlayerUnit iUnit)
         {
-            selectedUnits.Add(iUnit.gameObject);
+            _selectedUnits.Add(iUnit.gameObject);
             iUnit.Select();
-            updateSelectedUnits(selectedUnits);
+            UpdateSelectedUnits();
         }
 
         private void DeselectUnit(PlayerUnit iUnit)
         {
-            selectedUnits.Remove(iUnit.gameObject);
+            _selectedUnits.Remove(iUnit.gameObject);
             iUnit.Deselect();
-            updateSelectedUnits(selectedUnits);
+            UpdateSelectedUnits();
         }
 
         private void DeselectAllUnits()
         {
-            if (selectedUnits.Count > 0)
+            List<GameObject> deadUnits = new List<GameObject>();
+            if (_selectedUnits.Count > 0)
             {
-                foreach (GameObject iUnit in selectedUnits)
+                foreach (GameObject iUnit in _selectedUnits)
                 {
-                    PlayerUnit instance = iUnit.GetComponent<PlayerUnit>();
-                    instance.Deselect();
+                    if (!iUnit) deadUnits.Add(iUnit);
+                    else
+                    {
+                        PlayerUnit instance = iUnit.GetComponent<PlayerUnit>();
+                        instance.Deselect();
+                    }
                 }
-                selectedUnits.Clear();
-                updateSelectedUnits(selectedUnits);
+                foreach (var deadUnit in deadUnits)
+                {
+                    _selectedUnits.Remove(deadUnit);
+                }
+                deadUnits.Clear();
+                _selectedUnits.Clear();
+                UpdateSelectedUnits();
             }
+        }
 
+        private void UpdateSelectedUnits()
+        {
+            if (updateSelectedUnits != null)
+                updateSelectedUnits(_selectedUnits);
         }
 
         private void SelectBuilding()
         {
             DeselectAllUnits();
-            Building building = hitGO.GetComponent<Building>();
-            selectedBuilding = building;
-            selectedBuilding.Select();
+            Building building = _hitGo.GetComponent<Building>();
+            _selectedBuilding = building;
+            _selectedBuilding.Select();
         }
 
         private void DeselectBuilding()
         {
-            if (selectedBuilding)
-            {
-                selectedBuilding.Deselect();
-                selectedBuilding = null;
-            }
+            if (!_selectedBuilding) return;
+            _selectedBuilding.Deselect();
+            _selectedBuilding = null;
         }
 
         public void AssignAction()
         {
             if (assignAction == null) { return; }
-            assignAction(layerHit);
+            assignAction(_layerHit);
         }
     }
 }

@@ -28,7 +28,12 @@ namespace RTS
             DestroyOldIcons();
             foreach (GameObject o in selectedUnits)
             {
-                Instantiate(unitPanelPrefab, transform);
+                if (!o) return;
+                GameObject newIcon = Instantiate(unitPanelPrefab, transform);
+                UnitHealth health = o.GetComponent<UnitHealth>();
+                UnitPanelHealthBar uHealth = newIcon.GetComponent<UnitPanelHealthBar>();
+                if (!health || !uHealth) return;
+                uHealth.Initialize(health);
             }
         }
 

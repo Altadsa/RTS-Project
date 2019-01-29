@@ -78,12 +78,10 @@ namespace RTS
 
         private void OnTriggerStay(Collider other)
         {
-            if (!target)
+            if (target || !agent.isStopped) return;
+            if (other.GetComponent<EnemyUnit>())
             {
-                if (other.GetComponent<EnemyUnit>())
-                {
-                    target = other.gameObject;
-                }
+                target = other.gameObject;
             }
         }
 

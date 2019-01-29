@@ -7,7 +7,7 @@ namespace RTS
     [RequireComponent(typeof(UnitSelectionController))]
     public class UnitController : MonoBehaviour
     {
-        Layer[] selectableLayers =
+        readonly Layer[] selectableLayers =
         {
             Layer.Walkable,
             Layer.Units,
@@ -65,7 +65,7 @@ namespace RTS
                 int layerMask = 1 << (int)layer;
                 Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 bool hasHit = Physics.Raycast(mouseRay, out hit, Mathf.Infinity, layerMask);
-                if (hasHit)
+                if (hasHit && updateLayer != null)
                 {
                     updateLayer(layer, hit);
                 }
