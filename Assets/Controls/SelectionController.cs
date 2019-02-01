@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RTS
 {
-    public class UnitSelectionController : MonoBehaviour
+    public class SelectionController : MonoBehaviour
     {
         Layer _currentLayer;
         RaycastHit _layerHit;
@@ -19,14 +19,11 @@ namespace RTS
         public delegate void OnUpdateSelectedUnits(List<GameObject> selectedUnits);
         public event OnUpdateSelectedUnits updateSelectedUnits;
 
-        public delegate void UnitAction(RaycastHit targetHit);
-        public event UnitAction assignAction;
-
         private void Awake()
         {
             _selectedUnits = new List<GameObject>();
             selectableUnits = new List<GameObject>();
-            GetComponent<UnitController>().updateLayer += UpdateLayer;
+            GetComponent<UnitRaycaster>().UpdateActiveLayer += UpdateActiveLayer;
         }
 
         private void Update()
@@ -37,7 +34,7 @@ namespace RTS
             }
         }
 
-        private void UpdateLayer(Layer newLayer, RaycastHit _layerHit)
+        private void UpdateActiveLayer(Layer newLayer, RaycastHit _layerHit)
         {
             _currentLayer = newLayer;
             this._layerHit = _layerHit;
@@ -56,6 +53,9 @@ namespace RTS
                     break;
                 case Layer.Walkable:
                     DeselectAllUnits();
+                    break;
+                case Layer.Ui:
+                    //Do nothing
                     break;
                 default:
                     return;
@@ -176,10 +176,5 @@ namespace RTS
             _selectedBuilding = null;
         }
 
-        public void AssignAction()
-        {
-            if (assignAction == null) { return; }
-            assignAction(_layerHit);
-        }
     }
 }

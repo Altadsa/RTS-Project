@@ -12,7 +12,7 @@ namespace RTS
         private void Start()
         {
             Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
-            FindObjectOfType<UnitController>().updateLayer += SetMouseCursor;
+            FindObjectOfType<UnitRaycaster>().UpdateActiveLayer += SetMouseCursor;
         }
 
         private void SetMouseCursor(Layer layer, RaycastHit hit)

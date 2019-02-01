@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Siege Unit
   m_EditorClassIdentifier: 
   unit: {fileID: 8873932115636542036, guid: 701d95fc331c8ef4fbc17f53c8a59bbe, type: 3}
-  cost: 0
+  _goldCost: 100
+  _timberCost: 100
+  _foodCost: 0

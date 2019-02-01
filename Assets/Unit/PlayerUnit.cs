@@ -6,7 +6,8 @@ namespace RTS
     [RequireComponent(typeof(UnitCombat))]
     public class PlayerUnit : Unit
     {
-        UnitSelectionController selectionController;
+        SelectionController selectionController;
+        private UnitActionController _actionController;
         UnitCombat unitCombat;
 
         [HideInInspector]
@@ -19,7 +20,8 @@ namespace RTS
 
         private void SetupUnit()
         {
-            selectionController = FindObjectOfType<UnitSelectionController>();
+            selectionController = FindObjectOfType<SelectionController>();
+            _actionController = FindObjectOfType<UnitActionController>();
             unitCombat = GetComponent<UnitCombat>();
             agent = GetComponent<NavMeshAgent>();
             if (selectionController)
@@ -52,11 +54,15 @@ namespace RTS
 
         private void OnActionAssigned(RaycastHit hit)
         { 
-            if (!hit.collider.GetComponent<EnemyUnit>())
+            if (!hit.collider.GetComponent<EnemyUnit>() && !hit.collider.GetComponent<Resource>())
             {
                 Vector3 location = hit.point;
                 unitCombat.Target(null);
                 agent.SetDestination(location);
+            }
+            else if (GetComponent<UnitWork>() && hit.collider.GetComponent<Resource>())
+            {
+                GetComponent<UnitWork>().MineResource(hit.collider.gameObject);
             }
             else
             {
@@ -67,13 +73,13 @@ namespace RTS
         public void Select()
         {
             isSelected = true;
-            selectionController.assignAction += OnActionAssigned;
+            _actionController.assignAction += OnActionAssigned;
         }
 
         public void Deselect()
         {
             isSelected = false;
-            selectionController.assignAction -= OnActionAssigned;
+            _actionController.assignAction -= OnActionAssigned;
         }
     } 
 }

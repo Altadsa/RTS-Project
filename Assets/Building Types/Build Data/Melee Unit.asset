@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Melee Unit
   m_EditorClassIdentifier: 
   unit: {fileID: 8873932115636542036, guid: e1ede4053e00a924788921d2423829f5, type: 3}
-  cost: 0
+  _goldCost: 10
+  _timberCost: 10
+  _foodCost: 25

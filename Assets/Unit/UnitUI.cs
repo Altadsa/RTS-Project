@@ -29,10 +29,9 @@ namespace RTS
             barMask.transform.LookAt(Camera.main.transform);
         }
 
-        private void OnHealthChanged(float health, float maxHealth)
+        private void OnHealthChanged(float hPercent)
         {
-            float healthPercentage = health / maxHealth;
-            healthBar.fillAmount = healthPercentage;
+            healthBar.fillAmount = hPercent;
         }
 
     } 

@@ -179,6 +179,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 79d78fd86022b2d4ca2a7f7e2100232d, type: 2}
   - {fileID: 11400000, guid: 812084b1df0f5444b91e070d0f330515, type: 2}
   - {fileID: 11400000, guid: bb34decc1c15ac04ab9f71cb8af7b14d, type: 2}
+  onBuildingInfoLoaded: {fileID: 11400000, guid: 963be2cdc99fbda40b76cc24fc9f390b,
+    type: 2}
+  onBuildingDeselected: {fileID: 11400000, guid: 8f6a12d45c12cbd4caf1926c7ea45185,
+    type: 2}
 --- !u!64 &8175677501695984902
 MeshCollider:
   m_ObjectHideFlags: 0

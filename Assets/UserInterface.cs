@@ -8,7 +8,7 @@ namespace RTS
     {
         public static void ClearBuildMenu()
         {
-            GameObject buildMenu = GameObject.FindGameObjectWithTag("Build Panel");
+            GameObject buildMenu = GameObject.FindGameObjectWithTag("Units Menu");
             if (buildMenu)
             {
                 foreach (Transform child in buildMenu.transform)

@@ -11,7 +11,7 @@ namespace RTS
 
         public int armourValue = 0;
 
-        public delegate void OnHealthChanged(float health, float maxHealth);
+        public delegate void OnHealthChanged(float healthAsPercentage);
         public event OnHealthChanged onHealthChanged;
 
         private void Awake()
@@ -34,7 +34,8 @@ namespace RTS
         {
             if (onHealthChanged != null)
             {
-                onHealthChanged(health, maxHealth);
+                float hPercent = health / maxHealth;
+                onHealthChanged(hPercent);
             }
         }
 

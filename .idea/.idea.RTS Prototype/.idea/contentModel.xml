@@ -4,6 +4,7 @@
     <e p="C:\Users\IMVS1709121\.Rider2018.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\IMVS1709121\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_RTS Prototype.-1217322227.00" t="ExcludeRecursive" />
     <e p="D:\Unity Projects\RTS Prototype" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="AdditiveTint.shader" t="Include" />
@@ -12,18 +13,34 @@
           <e p="BuildingHealth.cs" t="Include" />
           <e p="BuildingMenu.cs" t="Include" />
           <e p="BuildingUI.cs" t="Include" />
+          <e p="Editor" t="Include">
+            <e p="ResourceEditor.cs" t="Include" />
+          </e>
+          <e p="Resource.cs" t="Include" />
+          <e p="ResourceType.cs" t="Include" />
           <e p="Tower.cs" t="Include" />
           <e p="UnitBuildData.cs" t="Include" />
         </e>
         <e p="Controls" t="Include">
           <e p="CameraControls.cs" t="Include" />
           <e p="MouseCursor.cs" t="Include" />
+          <e p="SelectionController.cs" t="Include" />
           <e p="UnitActionController.cs" t="Include" />
-          <e p="UnitController.cs" t="Include" />
-          <e p="UnitSelectionController.cs" t="Include" />
+          <e p="UnitInputController.cs" t="Include" />
+          <e p="UnitRaycaster.cs" t="Include" />
         </e>
         <e p="EnemyUnit.cs" t="Include" />
         <e p="Layer.cs" t="Include" />
+        <e p="ResourceData.cs" t="Include" />
+        <e p="ResourceUI.cs" t="Include" />
+        <e p="Scripts" t="Include">
+          <e p="Editor" t="Include">
+            <e p="EventSystemEditor.cs" t="Include" />
+          </e>
+          <e p="EventSystem.cs" t="Include" />
+          <e p="Listener.cs" t="Include" />
+          <e p="ScriptableEvent.cs" t="Include" />
+        </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Resources" t="Include">
             <e p="LineBreaking Following Characters.txt" t="Include" />
@@ -50,14 +67,19 @@
           </e>
         </e>
         <e p="Unit" t="Include">
+          <e p="IHealth.cs" t="Include" />
           <e p="PlayerUnit.cs" t="Include" />
+          <e p="Unit Panel" t="Include">
+            <e p="UnitPanel.cs" t="Include" />
+            <e p="UnitPanelHealthBar.cs" t="Include" />
+          </e>
           <e p="Unit.cs" t="Include" />
           <e p="UnitCombat.cs" t="Include" />
           <e p="UnitHealth.cs" t="Include" />
           <e p="UnitSelectionBox.cs" t="Include" />
           <e p="UnitUI.cs" t="Include" />
+          <e p="UnitWork.cs" t="Include" />
         </e>
-        <e p="UnitPanel.cs" t="Include" />
         <e p="UserInterface.cs" t="Include" />
       </e>
       <e p="Library" t="ExcludeRecursive" />

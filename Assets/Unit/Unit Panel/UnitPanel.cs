@@ -11,7 +11,7 @@ namespace RTS
 
         private void Start()
         {
-            FindObjectOfType<UnitSelectionController>().updateSelectedUnits += UpdatePanel;
+            FindObjectOfType<SelectionController>().updateSelectedUnits += UpdatePanel;
         }
 
         private void UpdatePanel(List<GameObject> selectedUnits)

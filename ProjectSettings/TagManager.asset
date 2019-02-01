@@ -4,10 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Build Panel
   - World Objects
   - Selection Box
   - Unit Panel
+  - Buildings Panel
+  - Units Menu
+  - Active Buildings
+  - Active Units
   layers:
   - Default
   - TransparentFX

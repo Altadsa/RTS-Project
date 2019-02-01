@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
 namespace RTS
 {
     public class BuildingMenu : MonoBehaviour
     {
-
-        public GameObject buildingPrefab;
+        private GameObject _buildingPrefab;
 
         bool isBuildingMoving = false;
 
@@ -18,13 +18,21 @@ namespace RTS
             SetupBuilding();
         }
 
+        private void Update()
+        {
+         
+            if (isBuildingMoving)
+            {
+                DeselectBuilding();                   
+                InstantiateBuildingIfExists();                
+            }
+        }
+
         private void SetupBuilding()
         {
             if (isBuildingMoving)
             {
-                InstantiateBuildingIfExists();
                 MoveBuildingToMousePosition();
-                DeselectBuilding();
             }
         }
 
@@ -41,15 +49,15 @@ namespace RTS
 
         private void InstantiateBuildingIfExists()
         {
-            if (!buildingInstance)
-            {
-                buildingInstance = Instantiate(buildingPrefab);
-                buildingInstance.transform.parent = GameObject.FindGameObjectWithTag("World Objects").transform;
-            }
+            if (buildingInstance || !_buildingPrefab) return;
+            buildingInstance = Instantiate(_buildingPrefab);
+            buildingInstance.transform.parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
         }
 
-        public void ConstructBuilding()
+        public void ConstructBuilding(GameObject buildingPrefab)
         {
+            if (_buildingPrefab) return;
+            _buildingPrefab = buildingPrefab;
             isBuildingMoving = true;
         }
 
@@ -58,8 +66,8 @@ namespace RTS
             if (Input.GetMouseButtonDown(0))
             {
                 isBuildingMoving = false;
+                _buildingPrefab = null;
                 buildingInstance = null;
-                return;
             }
         }
 

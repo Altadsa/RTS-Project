@@ -16,10 +16,10 @@ namespace RTS
             health.onHealthChanged += UpdateUiHealth;
         }
 
-        private void UpdateUiHealth(float health, float maxHealth)
+        private void UpdateUiHealth(float hPercent)
         {
-            barImage.fillAmount = health / maxHealth;
-            if (!(health <= 0)) return;
+            barImage.fillAmount = hPercent;
+            if (!(hPercent <= 0)) return;
             Destroy(gameObject);
         }
 

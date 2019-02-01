@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Ranged Unit
   m_EditorClassIdentifier: 
   unit: {fileID: 8873932115636542036, guid: 661322bae29f74e4188bb048d958a223, type: 3}
-  cost: 0
+  _goldCost: 20
+  _timberCost: 20
+  _foodCost: 25

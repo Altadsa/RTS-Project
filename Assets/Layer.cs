@@ -6,6 +6,7 @@
         Units = 9,
         Obstructions = 10,
         Attackables = 11,
-        Interactable = 12
+        Interactable = 12,
+        Ui =  5
     }
 }
