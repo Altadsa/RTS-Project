@@ -2,10 +2,8 @@ using UnityEngine;
 
 namespace RTS
 {
-    public interface IHealth
+    public interface IDamageable
     {
-        void Kill();
         void TakeDamage(float damage);
-        void UpdateHealth();
     }
 }

@@ -43,6 +43,7 @@ namespace RTS
 
         public void SelectionState()
         {
+            if (UiRaycast.IsRaycastingToUi()) return;
             switch (_currentLayer)
             {
                 case Layer.Units:
@@ -88,6 +89,7 @@ namespace RTS
 
         public void SelectUnitsInBox(Rect selectionRect)
         {
+            if (UiRaycast.IsRaycastingToUi()) return;
             List<GameObject> removableUnits = new List<GameObject>();
             if (!Input.GetKey(KeyCode.LeftControl))
             {
@@ -165,6 +167,7 @@ namespace RTS
         {
             DeselectAllUnits();
             Building building = _hitGo.GetComponent<Building>();
+            if (!building) return;
             _selectedBuilding = building;
             _selectedBuilding.Select();
         }

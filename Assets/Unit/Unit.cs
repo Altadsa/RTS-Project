@@ -5,7 +5,7 @@ namespace RTS
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(UnitHealth))]
-    public abstract class Unit : MonoBehaviour
+    public abstract class Unit : MonoBehaviour, IDamageable
     {
 
         protected NavMeshAgent agent;

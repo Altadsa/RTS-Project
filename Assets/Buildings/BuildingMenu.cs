@@ -24,7 +24,8 @@ namespace RTS
             if (isBuildingMoving)
             {
                 DeselectBuilding();                   
-                InstantiateBuildingIfExists();                
+                InstantiateBuildingIfExists();
+                UndoBuildingConstruction();
             }
         }
 
@@ -68,6 +69,16 @@ namespace RTS
                 isBuildingMoving = false;
                 _buildingPrefab = null;
                 buildingInstance = null;
+            }
+        }
+
+        private void UndoBuildingConstruction()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                isBuildingMoving = false;
+                Destroy(buildingInstance);
+                _buildingPrefab = null;
             }
         }
 

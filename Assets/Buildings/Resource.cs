@@ -9,8 +9,11 @@ namespace RTS
     public class Resource : MonoBehaviour
     {
         [SerializeField] private ResourceType resourceType;
+        [SerializeField] int _resourcesLeft = 1500;
+
         public void Mine()
         {
+            DestroyDepletedResource();
             switch (resourceType)
             {
                 case ResourceType.Timber: ResourceData.AmendTimber(1);
@@ -22,6 +25,12 @@ namespace RTS
                 default:
                     return;
             }
+        }
+
+        private void DestroyDepletedResource()
+        {
+            if (_resourcesLeft <= 0) Destroy(gameObject);
+            _resourcesLeft--;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace RTS
             if (Vector3.Distance(transform.position, _target.transform.position) <= actionRange)
             {
                 Resource resource = _target.GetComponent<Resource>();
-                if (!resource) return;
+                if (!resource) { _target = null; return; }
                 if (_timeSinceAction >= _timeToAction)
                 {
                     resource.Mine();

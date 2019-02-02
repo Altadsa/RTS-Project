@@ -2,7 +2,7 @@
 
 namespace RTS
 {
-    public class UnitHealth : MonoBehaviour
+    public class UnitHealth : MonoBehaviour, IDamageable, IKillable
     {
         [SerializeField]
         float maxHealth = 100;
@@ -27,10 +27,10 @@ namespace RTS
         private void HandleUnitHealth()
         {
             UpdateHealth();
-            KillUnit();
+            Kill();
         }
 
-        private void UpdateHealth()
+        public void UpdateHealth()
         {
             if (onHealthChanged != null)
             {
@@ -39,7 +39,7 @@ namespace RTS
             }
         }
 
-        private void KillUnit()
+        public void Kill()
         {
             if (health <= 0)
             {

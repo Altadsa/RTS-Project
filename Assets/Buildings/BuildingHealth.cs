@@ -2,7 +2,7 @@
 
 namespace RTS
 {
-    public class BuildingHealth : MonoBehaviour
+    public class BuildingHealth : MonoBehaviour, IDamageable
     {
         [SerializeField] float maxHealth = 250;
         float health;
