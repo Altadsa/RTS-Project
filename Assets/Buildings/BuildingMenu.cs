@@ -44,7 +44,7 @@ namespace RTS
             bool hasHitTerrain = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask);
             if (hasHitTerrain)
             {
-                buildingInstance.transform.position = hit.point;
+                buildingInstance.transform.position = SnapToPosition(hit.point);
             }
         }
 
@@ -52,7 +52,8 @@ namespace RTS
         {
             if (buildingInstance || !_buildingPrefab) return;
             buildingInstance = Instantiate(_buildingPrefab);
-            buildingInstance.transform.parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
+            Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
+            buildingInstance.transform.SetParent(parent, false);
         }
 
         public void ConstructBuilding(GameObject buildingPrefab)
@@ -80,6 +81,14 @@ namespace RTS
                 Destroy(buildingInstance);
                 _buildingPrefab = null;
             }
+        }
+
+        private Vector3 SnapToPosition(Vector3 pos)
+        {
+            float pX = Mathf.Floor(pos.x);
+            //float pY = Mathf.Floor(pos.y);
+            float pZ = Mathf.Floor(pos.z);
+            return new Vector3(pX, pos.y, pZ);
         }
 
     } 

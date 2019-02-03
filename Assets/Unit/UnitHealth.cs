@@ -2,58 +2,18 @@
 
 namespace RTS
 {
-    public class UnitHealth : MonoBehaviour, IDamageable, IKillable
+    public class UnitHealth : Health
     {
-        [SerializeField]
-        float maxHealth = 100;
-
-        float health = 100;
-
         public int armourValue = 0;
 
-        public delegate void OnHealthChanged(float healthAsPercentage);
-        public event OnHealthChanged onHealthChanged;
-
-        private void Awake()
-        {
-            health = maxHealth;
-        }
-
-        void Update()
-        {
-            HandleUnitHealth();
-        }
-
-        private void HandleUnitHealth()
-        {
-            UpdateHealth();
-            Kill();
-        }
-
-        public void UpdateHealth()
-        {
-            if (onHealthChanged != null)
-            {
-                float hPercent = health / maxHealth;
-                onHealthChanged(hPercent);
-            }
-        }
-
-        public void Kill()
-        {
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        public void TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             if (health > 0)
             {
                 float redDamage = (damage * DamageReduction());
                 Debug.Log(string.Format("{0} takes {1} damage (Base: {2} Armour Reduction: {3}%)", name, redDamage, damage, (armourValue * 0.025f)*100));
                 health -= redDamage;
+                UpdateHealth();
             }
         }
 
@@ -62,5 +22,4 @@ namespace RTS
             return 1 - (armourValue * 0.025f);
         }
     }
-
 }

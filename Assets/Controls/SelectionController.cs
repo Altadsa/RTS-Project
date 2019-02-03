@@ -91,7 +91,7 @@ namespace RTS
         {
             if (UiRaycast.IsRaycastingToUi()) return;
             List<GameObject> removableUnits = new List<GameObject>();
-            if (!Input.GetKey(KeyCode.LeftControl))
+            if (!Input.GetKey(KeyCode.LeftControl) && !_selectedBuilding)
             {
                 DeselectAllUnits();
             }
@@ -135,6 +135,7 @@ namespace RTS
 
         private void DeselectAllUnits()
         {
+            if (_selectedBuilding) DeselectBuilding();
             List<GameObject> deadUnits = new List<GameObject>();
             if (_selectedUnits.Count > 0)
             {

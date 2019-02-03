@@ -12,10 +12,12 @@ namespace RTS
         [SerializeField] int _goldCost;
         [SerializeField] int _timberCost;
         [SerializeField] int _foodCost;
+        [SerializeField] float _buildTime;
         
         public GameObject Unit { get { return unit; } }
         public int GoldCost { get { return _goldCost; } }
         public int TimberCost{ get { return _timberCost; } }
         public int FoodCost { get { return _foodCost; } }
+        public float BuildTime { get { return _buildTime; } }
     } 
 }

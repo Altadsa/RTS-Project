@@ -259,7 +259,6 @@ GameObject:
   - component: {fileID: 8873932115636542038}
   - component: {fileID: 8873932115636542042}
   - component: {fileID: 8873932115636542043}
-  - component: {fileID: 1189949445213207886}
   - component: {fileID: 7464352874115551029}
   - component: {fileID: 8873932115636542045}
   - component: {fileID: 3695547694245823355}
@@ -361,21 +360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSelected: 0
---- !u!114 &1189949445213207886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8873932115636542036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da348c8d0dbdba4498899e3ad30b416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 2
-  attackSpeed: 1
-  damage: 5
 --- !u!114 &7464352874115551029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,15 +383,15 @@ NavMeshAgent:
   m_GameObject: {fileID: 8873932115636542036}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 4
-  m_AutoTraverseOffMeshLink: 1
+  m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
@@ -438,6 +422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889ef0823e17c1741b9867f70cb8f78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeToAction: 2
+  actionRange: 7
 --- !u!1 &9117682003052762962
 GameObject:
   m_ObjectHideFlags: 0

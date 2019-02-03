@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace RTS
 {
-    [RequireComponent(typeof(UnitCombat))]
+    [RequireComponent(typeof(UnitAction))]
     public class PlayerUnit : Unit
     {
         SelectionController selectionController;
         private UnitActionController _actionController;
-        UnitCombat unitCombat;
+        UnitAction _unitAction;
 
         [HideInInspector]
         public bool isSelected = false;
@@ -22,7 +22,7 @@ namespace RTS
         {
             selectionController = FindObjectOfType<SelectionController>();
             _actionController = FindObjectOfType<UnitActionController>();
-            unitCombat = GetComponent<UnitCombat>();
+            _unitAction = GetComponent<UnitAction>();
             agent = GetComponent<NavMeshAgent>();
             if (selectionController)
             {
@@ -54,20 +54,7 @@ namespace RTS
 
         private void OnActionAssigned(RaycastHit hit)
         { 
-            if (!hit.collider.GetComponent<EnemyUnit>() && !hit.collider.GetComponent<Resource>())
-            {
-                Vector3 location = hit.point;
-                unitCombat.Target(null);
-                agent.SetDestination(location);
-            }
-            else if (GetComponent<UnitWork>() && hit.collider.GetComponent<Resource>())
-            {
-                GetComponent<UnitWork>().MineResource(hit.collider.gameObject);
-            }
-            else
-            {
-                unitCombat.Target(hit.collider.gameObject);
-            }
+            _unitAction.Target(hit);
         }
 
         public void Select()

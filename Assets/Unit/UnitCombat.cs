@@ -3,20 +3,13 @@ using UnityEngine.AI;
 
 namespace RTS
 {
-    public class UnitCombat : MonoBehaviour
+    public class UnitCombat : UnitAction
     {
-
-        public float attackRange = 2;
-        public float attackSpeed = 1;
         public float damage;
-        float timeSinceAttack = 0;
 
-        GameObject target;
-        NavMeshAgent agent;
-
-        private void Awake()
+        private void Start()
         {
-            agent = GetComponent<NavMeshAgent>();
+            _agent = GetComponent<NavMeshAgent>();
         }
 
         private void Update()
@@ -24,52 +17,37 @@ namespace RTS
             AttackTargetIfPossible();
         }
 
-        public void Target(GameObject _target)
-        {
-            agent.isStopped = false;
-            target = _target;
-        }
-
         private void AttackTargetIfPossible()
         {
-            timeSinceAttack += Time.deltaTime;
-            if (!target) { return; }
-            agent.SetDestination(target.transform.position);
-            if (agent.remainingDistance >= attackRange)
-            {
-                agent.isStopped = false;
-                agent.SetDestination(target.transform.position);
-            }
-            else
-            {
-                agent.isStopped = true;
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
-                Attack();
-            }
+            if (!_target) { return; }
+            _actionCooldown += Time.deltaTime;
+            if (_agent.destination != _target.transform.position) _agent.SetDestination(_target.transform.position);
+            //Debug.Log(_agent.pathStatus);
+            Attack();
         }
 
         private void Attack()
         {
-            bool canAttack = (timeSinceAttack >= attackSpeed) && IsWithinAttackRange();
+            bool canAttack = (_actionCooldown >= _timeToAction) && IsWithinAttackRange();
             if (canAttack)
             {
-                if (target.GetComponent<EnemyUnit>())
+                if (_target.GetComponent<EnemyUnit>())
                 {
-                    target.GetComponent<EnemyUnit>().TakeDamage(damage);
-                    timeSinceAttack = 0; 
+                    _target.GetComponent<EnemyUnit>().TakeDamage(damage);
+                    _actionCooldown = 0; 
                 }
-                if (target.GetComponent<BuildingHealth>())
+                if (_target.GetComponent<BuildingHealth>())
                 {
-                    target.GetComponent<BuildingHealth>().TakeDamage(damage);
-                    timeSinceAttack = 0;
+                    _target.GetComponent<BuildingHealth>().TakeDamage(damage);
+                    _actionCooldown = 0;
                 }
             }
         }
 
         bool IsWithinAttackRange()
         {
-            float distance = Vector3.Distance(transform.position, target.transform.position);
-            if (distance <= attackRange)
+            float distance = Vector3.Distance(transform.position, _target.transform.position);
+            if (distance <= actionRange)
             {
                 return true;
             }
@@ -78,18 +56,18 @@ namespace RTS
 
         private void OnTriggerStay(Collider other)
         {
-            if (target || !agent.isStopped) return;
+            if (_target || !_agent.isStopped) return;
             if (other.GetComponent<EnemyUnit>())
             {
-                target = other.gameObject;
+                _target = other.gameObject;
             }
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-            if (target)
-            Gizmos.DrawWireSphere(target.transform.position, attackRange);
+            if (_target)
+            Gizmos.DrawWireSphere(_target.transform.position, actionRange);
         }
     } 
 }

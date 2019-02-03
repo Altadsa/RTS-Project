@@ -1,37 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.TerrainAPI;
-using UnityEngine;
+﻿using UnityEditor;
 
 namespace RTS
 {
     [CustomEditor(typeof(Resource))]
     public class ResourceEditor : Editor
-    {
-        private ResourceType _resourceType;
-
-        private SerializedProperty _resource;
-        private SerializedProperty _resourceAmount;
+    { 
+        private SerializedProperty _sResource;
+        private SerializedProperty _sResourceAmount;
+        private SerializedProperty _sLoadWeight;
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
             SetResourceType();
             SetResourceAmount();
+            SetLoadWeight();
             serializedObject.ApplyModifiedProperties();
         }
 
         private void SetResourceType()
         {
-            _resource = serializedObject.FindProperty("resourceType");
-            _resource.intValue = EditorGUILayout.Popup("Resource Type", _resource.enumValueIndex, _resource.enumDisplayNames);
+            _sResource = serializedObject.FindProperty("_resourceType");
+            _sResource.intValue = EditorGUILayout.Popup("Resource Type", _sResource.enumValueIndex, _sResource.enumDisplayNames);
         }
 
         private void SetResourceAmount()
         {
-            _resourceAmount = serializedObject.FindProperty("_resourcesLeft");
-            _resourceAmount.intValue = EditorGUILayout.IntField("Resource Amount", _resourceAmount.intValue);
+            _sResourceAmount = serializedObject.FindProperty("_resourcesLeft");
+            _sResourceAmount.intValue = EditorGUILayout.IntField("Resource Amount", _sResourceAmount.intValue);
+        }
+
+        private void SetLoadWeight()
+        {
+            _sLoadWeight = serializedObject.FindProperty("_loadWeight");
+            _sLoadWeight.intValue = EditorGUILayout.IntField("Load Weight", _sLoadWeight.intValue);
         }
     }
 }

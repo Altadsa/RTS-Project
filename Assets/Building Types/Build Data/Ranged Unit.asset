@@ -16,3 +16,4 @@ MonoBehaviour:
   _goldCost: 20
   _timberCost: 20
   _foodCost: 25
+  _buildTime: 30

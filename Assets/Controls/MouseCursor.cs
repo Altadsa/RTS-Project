@@ -6,6 +6,7 @@ namespace RTS
     {
         public Texture2D cursorTexture;
         public Texture2D attackTexture;
+        public Texture2D buildTexture;
         public CursorMode cursorMode = CursorMode.Auto;
         public Vector2 hotSpot = new Vector2(-96, 96);
 
@@ -26,6 +27,11 @@ namespace RTS
                     Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
                     return;
             }
+        }
+
+        private void SetBuildCursor()
+        {
+
         }
     }
 }

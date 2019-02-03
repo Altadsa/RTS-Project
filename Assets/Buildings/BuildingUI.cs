@@ -13,15 +13,7 @@ namespace RTS
 
         void Awake()
         {
-            buildingHealth = GetComponentInParent<BuildingHealth>();
-            barMask = GetComponentInChildren<RawImage>();
-            healthBar = GetComponentInChildren<Image>();
-            uiCanvas = GetComponent<Canvas>();
-            if (buildingHealth && healthBar)
-            {
-                buildingHealth.updateBuildingHealth += OnHealthChanged;
-            }
-            uiCanvas.worldCamera = Camera.main;
+            Initialize();
         }
 
         private void LateUpdate()
@@ -29,10 +21,27 @@ namespace RTS
             barMask.transform.LookAt(Camera.main.transform);
         }
 
-        private void OnHealthChanged(float health, float maxHealth)
+        private void Initialize()
         {
-            float healthPercentage = health / maxHealth;
-            healthBar.fillAmount = healthPercentage;
+            buildingHealth = GetComponentInParent<BuildingHealth>();
+            barMask = GetComponentInChildren<RawImage>();
+            healthBar = GetComponentInChildren<Image>();
+            uiCanvas = GetComponent<Canvas>();
+            if (buildingHealth && healthBar)
+            {
+                buildingHealth.onHealthChanged += OnHealthChanged;
+            }
+            uiCanvas.worldCamera = Camera.main;
+        }
+
+        private void OnHealthChanged(float healthAsPercentage)
+        {
+            healthBar.fillAmount = healthAsPercentage;
+        }
+
+        private void UpdateBuildProgress(float buildPercentage)
+        {
+
         }
 
     }
