@@ -93,6 +93,9 @@ GameObject:
   - component: {fileID: 4850211042944448493}
   - component: {fileID: 4850211042944448494}
   - component: {fileID: 4850211042944448492}
+  - component: {fileID: 1791482266}
+  - component: {fileID: 1791482267}
+  - component: {fileID: 1791482268}
   m_Layer: 0
   m_Name: Unit Selector
   m_TagString: Untagged
@@ -126,10 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc3821b144344847b07e93861478ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectableLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  selectableUnits: []
 --- !u!114 &4850211042944448492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +141,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776ffe8059b0c9345a251d4f8d598a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sbRectTransform: {fileID: 0}
+--- !u!114 &1791482266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850211042944448495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f373c72045dbb3b4e900feade46bab1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1791482267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850211042944448495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2917a8caf46324ea1eec7ccca229d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectableUnits: []
+--- !u!114 &1791482268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850211042944448495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5243ce684661fab4cb1bd7adca5fd691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4850211043004721096
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4850211043005140191}
   - component: {fileID: 4850211043005140190}
+  - component: {fileID: 1997186193}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -234,6 +270,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorTexture: {fileID: 2800000, guid: 98c6319753c424e4896555867b241750, type: 3}
   attackTexture: {fileID: 2800000, guid: 187aba95cefab8d40aa14fdb0013e664, type: 3}
+  buildTexture: {fileID: 0}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
-  layers: 080000000b000000
+--- !u!114 &1997186193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850211043005140184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae6c85ba50e5bc4fb574369459872cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
