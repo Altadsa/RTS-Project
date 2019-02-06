@@ -11,6 +11,7 @@ TagManager:
   - Units Menu
   - Active Buildings
   - Active Units
+  - Buttons Panel
   layers:
   - Default
   - TransparentFX

@@ -5,15 +5,25 @@ namespace RTS
 {
     public class UserInterface : MonoBehaviour
     {
-        [SerializeField] static GameObject _buttonsPanel;
-        [SerializeField] static GameObject _selectionPanel;
+        [SerializeField] GameObject _buttonsPanel;
+        [SerializeField] GameObject _buildingSelection;
+        [SerializeField] GameObject _unitSelection;
 
-        private void Start()
+        private static UserInterface _instance;
+        private static readonly object padlock = new object();
+        public static UserInterface Instance
         {
-            _buttonsPanel = GameObject.FindGameObjectWithTag("Buttons Panel");
+            get
+            {
+                lock(padlock)
+                {
+                    if (!_instance) { _instance = FindObjectOfType<UserInterface>();  }
+                    return _instance;
+                }
+            }
         }
 
-        public static void ClearButtonsMenu()
+        private void ClearButtonsMenu()
         {
             foreach (Transform child in _buttonsPanel.transform)
             {
@@ -21,13 +31,33 @@ namespace RTS
             }
         }
 
-        public static void LoadMenuButtons(List<GameObject> buttons)
+        public void LoadMenuButtons(List<GameObject> buttons)
         {
             ClearButtonsMenu();
             foreach (GameObject button in buttons)
             {
                 button.transform.SetParent(_buttonsPanel.transform);
+                button.transform.localScale = Vector3.one;
             }
+        }
+
+        public void LoadBuildingSelection()
+        {
+            _buildingSelection.SetActive(true);
+            _unitSelection.SetActive(false);
+        }
+
+        public void LoadUnitSelection()
+        {
+            _unitSelection.SetActive(true);
+            _buildingSelection.SetActive(false);
+        }
+
+        public void ClearUI()
+        {
+            _unitSelection.SetActive(false);
+            _buildingSelection.SetActive(false);
+            ClearButtonsMenu();
         }
     } 
 }

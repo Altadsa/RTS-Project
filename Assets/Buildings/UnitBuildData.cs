@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace RTS
 {
@@ -13,11 +13,13 @@ namespace RTS
         [SerializeField] int _timberCost;
         [SerializeField] int _foodCost;
         [SerializeField] float _buildTime;
+        [SerializeField] Sprite _queueImage;
         
         public GameObject Unit { get { return unit; } }
         public int GoldCost { get { return _goldCost; } }
         public int TimberCost{ get { return _timberCost; } }
         public int FoodCost { get { return _foodCost; } }
         public float BuildTime { get { return _buildTime; } }
+        public Sprite QueueImage { get { return _queueImage; } }
     } 
 }

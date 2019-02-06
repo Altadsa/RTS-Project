@@ -14,44 +14,53 @@ namespace RTS
         float _timeSpentBuilding = 0;
         Queue<UnitBuildData> _buildQueue = new Queue<UnitBuildData>(5);
 
-        [FormerlySerializedAs("onBuildingInfoLoaded")] [SerializeField] private ScriptableEvent onBuildingSelected;
-        [SerializeField] private ScriptableEvent onBuildingDeselected;
+        public delegate void UpdateBuildingInfo(Building building, float buildPercent);
+        public event UpdateBuildingInfo UpdateInfo;
 
-        public delegate void OnBuildQueueUpdate(float percentage);
-        public event OnBuildQueueUpdate UpdateBuildQueue;
+        public Queue<UnitBuildData> Queue { get { return _buildQueue; } }
 
         private void Update()
         {
             if (_buildQueue.Count > 0)
             {
                 _timeSpentBuilding += Time.deltaTime;
-                if (_timeSpentBuilding >= _buildQueue.Peek().BuildTime)
+                UnitBuildData data = _buildQueue.Peek();
+                UpdateBuildInfo(data);
+                if (_timeSpentBuilding >= data.BuildTime)
                 {
-                    Debug.Log(_buildQueue.Peek().BuildTime);
                     transform.GetChild(0).transform.position = (transform.forward * 5) + transform.position;
-                    GameObject unit = Instantiate(_buildQueue.Peek().Unit, transform.GetChild(0));
+                    GameObject unit = Instantiate(data.Unit, transform.GetChild(0));
                     _buildQueue.Dequeue();
+                    if (_buildQueue.Count <= 0) UpdateInfo(this, 0);
                     _timeSpentBuilding = 0;
+
                 }
             }
+
+        }
+
+        private void UpdateBuildInfo(UnitBuildData data)
+        {
+            if (UpdateInfo == null) return;
+            float progress = _timeSpentBuilding / data.BuildTime;
+            UpdateInfo(this, progress);
         }
 
         public void Select()
         {
             GetComponentInChildren<Projector>().enabled = true;
-            onBuildingSelected.Raise();   
             LoadBuildingInterface();
         }
 
         public void Deselect()
         {
             GetComponentInChildren<Projector>().enabled = false;
-            onBuildingDeselected.Raise();
         }
 
         public void LoadBuildingInterface()
         {
             SetupButtons();
+            SetupBuildingInfo();
         }
 
         private void SetupButtons()
@@ -64,18 +73,21 @@ namespace RTS
                 buttonInstance.GetComponent<Button>().onClick.AddListener(delegate { BuildUnit(unitInstance); });
                 buttons.Add(buttonInstance);
             }
-            UserInterface.LoadMenuButtons(buttons);
+            UserInterface.Instance.LoadMenuButtons(buttons);
         }
 
-        private void SetupBuildingInfo(GameObject infoWindow)
+        private void SetupBuildingInfo()
         {
-
+            UserInterface.Instance.LoadBuildingSelection();
+            BuildingInfo.Instance.LoadBuildingInfo(this);
         }
 
         private void BuildUnit(UnitBuildData unitInstance)
-        { 
+        {
+            if (_buildQueue.Count >= 5) return;
             if (CanBuyUnit(unitInstance))
             {
+
                 _buildQueue.Enqueue(unitInstance);
                 ResourceData.AmendGold(-unitInstance.GoldCost);
                 ResourceData.AmendFood(-unitInstance.FoodCost);

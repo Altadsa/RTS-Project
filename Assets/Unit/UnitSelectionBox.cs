@@ -32,6 +32,7 @@ namespace RTS
 
         private void DrawSelectionBox()
         {
+            if (UiRaycast.RaycastToUi) return;
             if (Input.GetMouseButtonDown(0))
             {
                 bool hasHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity);

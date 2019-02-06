@@ -17,3 +17,4 @@ MonoBehaviour:
   _timberCost: 0
   _foodCost: 0
   _buildTime: 15
+  _queueImage: {fileID: 21300000, guid: 46f1567b06f87b44c9309759ef1a842b, type: 3}

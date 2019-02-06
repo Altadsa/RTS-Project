@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 59369438}
   - component: {fileID: 59369437}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Progress Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,11 +65,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 175de17e6d8189d4e9963890b14292ff, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 235970438}
   - component: {fileID: 235970437}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: 2nd in Queue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 619501700}
   - component: {fileID: 619501699}
   m_Layer: 5
-  m_Name: Image
+  m_Name: 1st in Queue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 801773219}
   - component: {fileID: 801773218}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Object in Production
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 976645240}
   - component: {fileID: 976645239}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Progress Bar Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -616,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1147706160}
   - component: {fileID: 1147706161}
+  - component: {fileID: 364946357768551948}
   m_Layer: 5
   m_Name: Building Info
   m_TagString: Untagged
@@ -667,6 +668,26 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &364946357768551948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147706159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d2a206c57f52d47bf00c62efbd810a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _productionProgress: {fileID: 59369437}
+  _itemInProduction: {fileID: 801773218}
+  _itemsInQueue:
+  - {fileID: 619501699}
+  - {fileID: 235970437}
+  - {fileID: 1880424454}
+  - {fileID: 1666668774}
+  emptyQueuePosition: {fileID: 21300000, guid: 175de17e6d8189d4e9963890b14292ff, type: 3}
 --- !u!1 &1163880861
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +969,7 @@ GameObject:
   - component: {fileID: 1666668775}
   - component: {fileID: 1666668774}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: 4th in Queue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1022,7 +1043,7 @@ GameObject:
   - component: {fileID: 1880424455}
   - component: {fileID: 1880424454}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: 3rd in Queue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2033,6 +2054,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b2f36566446b04baa9ba62401a04f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonsPanel: {fileID: 8938111614194636954}
+  _buildingSelection: {fileID: 1147706159}
+  _unitSelection: {fileID: 2710010583498101155}
 --- !u!1 &7464311397903185704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2142,7 @@ GameObject:
   - component: {fileID: 7464311398231348800}
   - component: {fileID: 8777674265405327791}
   m_Layer: 5
-  m_Name: Unit Panel
+  m_Name: Selection Panel
   m_TagString: Unit Panel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2927,7 +2951,7 @@ GameObject:
   - component: {fileID: 7419980286339565757}
   - component: {fileID: 4003978185684977869}
   m_Layer: 5
-  m_Name: Buildings Menu
+  m_Name: Buttons Panel
   m_TagString: Buttons Panel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

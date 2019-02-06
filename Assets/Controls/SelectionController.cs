@@ -30,6 +30,7 @@ namespace RTS
         {
             if (Input.GetKeyDown(KeyCode.Escape) || _selectedUnits.Count > 0)
             {
+                UserInterface.Instance.LoadUnitSelection();
                 DeselectBuilding();
             }
         }
