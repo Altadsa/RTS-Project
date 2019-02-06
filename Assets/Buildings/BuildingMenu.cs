@@ -7,7 +7,7 @@ namespace RTS
 {
     public class BuildingMenu : MonoBehaviour
     {
-        private GameObject _buildingPrefab;
+        private BuildingBuildData _buildData;
 
         bool isBuildingMoving = false;
 
@@ -50,16 +50,17 @@ namespace RTS
 
         private void InstantiateBuildingIfExists()
         {
-            if (buildingInstance || !_buildingPrefab) return;
-            buildingInstance = Instantiate(_buildingPrefab);
+            if (buildingInstance || !_buildData) return;
+            buildingInstance = Instantiate(_buildData.ConstructionPrefab);
+            buildingInstance.GetComponent<ConstructionBuilding>().Setup(_buildData.BuildingPrefab);
             Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
             buildingInstance.transform.SetParent(parent, false);
         }
 
-        public void ConstructBuilding(GameObject buildingPrefab)
+        public void ConstructBuilding(BuildingBuildData buildData)
         {
-            if (_buildingPrefab) return;
-            _buildingPrefab = buildingPrefab;
+            if (_buildData) return;
+            _buildData = buildData;
             isBuildingMoving = true;
         }
 
@@ -68,7 +69,7 @@ namespace RTS
             if (Input.GetMouseButtonDown(0))
             {
                 isBuildingMoving = false;
-                _buildingPrefab = null;
+                _buildData = null;
                 buildingInstance = null;
             }
         }
@@ -79,7 +80,7 @@ namespace RTS
             {
                 isBuildingMoving = false;
                 Destroy(buildingInstance);
-                _buildingPrefab = null;
+                _buildData = null;
             }
         }
 

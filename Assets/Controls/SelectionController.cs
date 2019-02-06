@@ -10,7 +10,7 @@ namespace RTS
         RaycastHit _layerHit;
         GameObject _hitGo;
 
-        List<GameObject> _selectedUnits;
+        public List<GameObject> _selectedUnits { get; private set; }
         [HideInInspector]
         public List<GameObject> selectableUnits;
 
@@ -61,6 +61,14 @@ namespace RTS
                 default:
                     return;
             }
+        }
+
+        public void SelectUnitFromUI(GameObject unit)
+        {
+            DeselectAllUnits();
+            PlayerUnit pUnit = unit.GetComponent<PlayerUnit>();
+            if (pUnit)
+                SelectUnit(pUnit);
         }
 
         private void SelectUnitHit()

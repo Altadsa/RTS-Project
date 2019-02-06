@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace RTS
 {
@@ -10,23 +6,25 @@ namespace RTS
     {
         [SerializeField] ResourceType _resourceType;
         [SerializeField] int _resourcesLeft = 1500;
-        [SerializeField] int _loadWeight = 1;
+        [SerializeField] float _loadWeight = 1;
+        [SerializeField] float _timeToWork = 2;
+        Canvas _canvas;
 
-        public int Mine()
+        private void LateUpdate()
+        {
+            if (_canvas && _canvas.isActiveAndEnabled)
+                _canvas.transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        }
+
+        public delegate void OnResourceChanged(int currentResouces);
+        public event OnResourceChanged updateResources;
+
+        public float WorkTime() { return _timeToWork; }
+
+        public float Gather()
         {
             DestroyDepletedResource();
             return _loadWeight;
-            //switch (resourceType)
-            //{
-            //    case ResourceType.Timber: ResourceData.AmendTimber(1);
-            //        break;
-            //    case ResourceType.Gold: ResourceData.AmendGold(1);
-            //        break;
-            //    case ResourceType.Food: ResourceData.AmendFood(1);
-            //        break;
-            //    default:
-            //        return;
-            //}
         }
 
         public ResourceType ResourceType() { return _resourceType; }

@@ -9,7 +9,7 @@ namespace RTS
         float xThrow, zThrow, yZoom;
         Vector3 scroll = new Vector3(0,1,-1);
         Vector3 middleClickPos;
-        float minZoom = 5, maxZoom = 20;
+        [SerializeField] float minZoom = 5, maxZoom = 20;
 
         const float ROTATION = 90;
 

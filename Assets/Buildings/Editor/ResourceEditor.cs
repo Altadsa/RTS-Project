@@ -4,10 +4,8 @@ namespace RTS
 {
     [CustomEditor(typeof(Resource))]
     public class ResourceEditor : Editor
-    { 
-        private SerializedProperty _sResource;
-        private SerializedProperty _sResourceAmount;
-        private SerializedProperty _sLoadWeight;
+    {
+        private SerializedProperty _sResource, _sResourceAmount, _sLoadWeight, _sWorkTime;
 
         public override void OnInspectorGUI()
         {
@@ -15,6 +13,7 @@ namespace RTS
             SetResourceType();
             SetResourceAmount();
             SetLoadWeight();
+            SetTimeToWork();
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -33,7 +32,13 @@ namespace RTS
         private void SetLoadWeight()
         {
             _sLoadWeight = serializedObject.FindProperty("_loadWeight");
-            _sLoadWeight.intValue = EditorGUILayout.IntField("Load Weight", _sLoadWeight.intValue);
+            _sLoadWeight.floatValue = EditorGUILayout.FloatField("Load Weight", _sLoadWeight.floatValue);
+        }
+
+        private void SetTimeToWork()
+        {
+            _sWorkTime = serializedObject.FindProperty("_timeToWork");
+            _sWorkTime.floatValue = EditorGUILayout.FloatField("Work Time", _sWorkTime.floatValue);
         }
     }
 }

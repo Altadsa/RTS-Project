@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5beadc5cf456d24d84781402a746e5e, type: 3}
-  m_Name: Worker Unit
+  m_Name: Siege Unit
   m_EditorClassIdentifier: 
-  unit: {fileID: 8873932115636542036, guid: ed6cc975b78eb2e429927cdd02e10253, type: 3}
-  _goldCost: 50
-  _timberCost: 0
+  unit: {fileID: 8873932115636542036, guid: 701d95fc331c8ef4fbc17f53c8a59bbe, type: 3}
+  _goldCost: 100
+  _timberCost: 100
   _foodCost: 0
+  _buildTime: 0

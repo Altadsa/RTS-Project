@@ -1,20 +1,32 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace RTS
 {
-    public static class UserInterface
+    public class UserInterface : MonoBehaviour
     {
-        public static void ClearBuildMenu()
+        [SerializeField] static GameObject _buttonsPanel;
+        [SerializeField] static GameObject _selectionPanel;
+
+        private void Start()
         {
-            GameObject buildMenu = GameObject.FindGameObjectWithTag("Units Menu");
-            if (buildMenu)
+            _buttonsPanel = GameObject.FindGameObjectWithTag("Buttons Panel");
+        }
+
+        public static void ClearButtonsMenu()
+        {
+            foreach (Transform child in _buttonsPanel.transform)
             {
-                foreach (Transform child in buildMenu.transform)
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
+                Destroy(child.gameObject);
+            }
+        }
+
+        public static void LoadMenuButtons(List<GameObject> buttons)
+        {
+            ClearButtonsMenu();
+            foreach (GameObject button in buttons)
+            {
+                button.transform.SetParent(_buttonsPanel.transform);
             }
         }
     } 

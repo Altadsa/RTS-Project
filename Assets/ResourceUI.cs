@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
-using UnityEngine.UI;
+using TMPro;
 
 namespace RTS
 {
     public class ResourceUI : MonoBehaviour
     {
-        [SerializeField] private Text _timberText;
-        [SerializeField] private Text _goldText;
-        [SerializeField] private Text _foodText;
+        [SerializeField] TMP_Text _resourceText;
+        Resource _resource;
 
-        private void Update()
+        private void Start()
         {
-            _timberText.text = "Timber: " + ResourceData.Timber;
-            _goldText.text = "Gold: " + ResourceData.Gold;
-            _foodText.text = "Food: " + ResourceData.Food;
+            _resource = GetComponentInParent<Resource>();
+            _resource.updateResources += UpdateResource;
         }
-    }
+
+        private void UpdateResource(int currentResources)
+        {
+            _resourceText.text = string.Format("{0}: {1}", _resource.name, currentResources);
+        }
+    } 
 }

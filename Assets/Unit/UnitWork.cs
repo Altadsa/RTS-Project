@@ -10,8 +10,8 @@ namespace RTS
 
         ResourceType _resourceToWork;
         int _resourceAmount = 0;
-        int _maxCarryLoad = 5;
-        int _currentCarryLoad = 0;
+        float _maxCarryLoad = 5;
+        float _currentCarryLoad = 0;
         Headquarters _dropOffPoint;
 
         bool isDroppingResources;
@@ -24,7 +24,6 @@ namespace RTS
 
         private void Update()
         {
-
             if (!_target) return;
             _actionCooldown += Time.deltaTime;
             if (!isDroppingResources)
@@ -38,16 +37,46 @@ namespace RTS
 
         private void WorkIfWithinRange()
         {
-            if (Vector3.Distance(transform.position, _target.transform.position) <= actionRange)
+            float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
+            Debug.Log(distanceToTarget);
+            if (distanceToTarget <= actionRange)
             {
-                Resource resource = _target.GetComponent<Resource>();
-                if (!resource) { _target = null; return; }
-                _resourceToWork = resource.ResourceType();
-                if (_actionCooldown >= _timeToAction)
-                {
-                    MineResource(resource);
-                    _actionCooldown = 0;
-                }
+                GatherResource();
+                ConstructBuilding();
+                RepairBuilding();
+            }
+        }
+
+        private void GatherResource()
+        {
+            Resource resource = _target.GetComponent<Resource>();
+            if (!resource) { return; }
+            _resourceToWork = resource.ResourceType();
+            _timeToAction = resource.WorkTime();
+            if (_actionCooldown >= _timeToAction)
+            {
+                Gather(resource);
+                _actionCooldown = 0;
+            }
+        }
+
+        private void ConstructBuilding()
+        {
+            ConstructionBuilding building = _target.GetComponent<ConstructionBuilding>();
+            if (!building) return;
+            if (_actionCooldown >= _timeToAction)
+            {
+                Construct(building);
+            }
+        }
+
+        private void RepairBuilding()
+        {
+            Building building = _target.GetComponent<Building>();
+            if (!building) return;
+            if (_actionCooldown >= _timeToAction)
+            {
+                Repair(building);
             }
         }
 
@@ -67,15 +96,39 @@ namespace RTS
             }
         }
 
-        private void MineResource(Resource resource)
+        private void Gather(Resource resource)
         {
             if (_currentCarryLoad < _maxCarryLoad)
             {
-                _currentCarryLoad += resource.Mine();
+                _currentCarryLoad += resource.Gather();
                 _resourceAmount++;
                 return;
             }
             ReturnToHeadquarters();
+        }
+
+        private void Construct(ConstructionBuilding building)
+        {
+            if (building)
+            {
+                building.AddConstructionProgress();
+                _actionCooldown = 0;
+                return;
+            }
+            _target = null;
+        }
+
+        private void Repair(Building building)
+        {
+            var buildingHealth = building.GetComponent<BuildingHealth>();
+            if (buildingHealth
+                 && buildingHealth.NeedsRepaired)
+            {
+                buildingHealth.Repair();
+                _actionCooldown = 0;
+                return;
+            }
+            _target = null;
         }
 
         private void ReturnToHeadquarters()

@@ -51,23 +51,20 @@ namespace RTS
 
         public void LoadBuildingInterface()
         {
-            GameObject buildingWindow = GameObject.FindGameObjectWithTag("Units Menu");
-
-            if (buildingWindow)
-            {
-                UserInterface.ClearBuildMenu();
-                SetupButtons(buildingWindow);
-            }
+            SetupButtons();
         }
 
-        private void SetupButtons(GameObject windowToSetup)
+        private void SetupButtons()
         {
+            List<GameObject> buttons = new List<GameObject>();
             foreach (UnitBuildData unitInstance in unitPrefabs)
             {
-                GameObject buttonInstance = Instantiate(buildButton, windowToSetup.GetComponent<RectTransform>());
+                GameObject buttonInstance = Instantiate(buildButton);
                 buttonInstance.GetComponentInChildren<Text>().text = unitInstance.name;
                 buttonInstance.GetComponent<Button>().onClick.AddListener(delegate { BuildUnit(unitInstance); });
+                buttons.Add(buttonInstance);
             }
+            UserInterface.LoadMenuButtons(buttons);
         }
 
         private void SetupBuildingInfo(GameObject infoWindow)
