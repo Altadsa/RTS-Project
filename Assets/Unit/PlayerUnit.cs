@@ -6,7 +6,7 @@ namespace RTS
     [RequireComponent(typeof(UnitAction))]
     public class PlayerUnit : Unit
     {
-        SelectionController selectionController;
+        SelectionController _selectionController;
         private UnitActionController _actionController;
         UnitAction _unitAction;
 
@@ -20,19 +20,19 @@ namespace RTS
 
         private void SetupUnit()
         {
-            selectionController = FindObjectOfType<SelectionController>();
+            _selectionController = FindObjectOfType<SelectionController>();
             _actionController = FindObjectOfType<UnitActionController>();
             _unitAction = GetComponent<UnitAction>();
             agent = GetComponent<NavMeshAgent>();
-            if (selectionController)
+            if (_selectionController)
             {
-                selectionController.selectableUnits.Add(gameObject);
+                _selectionController.selectableUnits.Add(gameObject);
             }
         }
 
         private void OnDestroy()
         {
-            selectionController.selectableUnits.Remove(gameObject);
+            _selectionController.selectableUnits.Remove(gameObject);
         }
 
         private void Update()
@@ -67,6 +67,11 @@ namespace RTS
         {
             isSelected = false;
             _actionController.assignAction -= OnActionAssigned;
+        }
+
+        public void ActionMenu(UnitAction uAction)
+        {
+
         }
     } 
 }

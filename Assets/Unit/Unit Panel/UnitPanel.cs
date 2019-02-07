@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace RTS
 {
@@ -23,28 +24,35 @@ namespace RTS
 
         private void Update()
         {
-            SelectUnitFromUI();
+            SelectUnitFromUi();
         }
 
-        private void SelectUnitFromUI()
+        private void SelectUnitFromUi()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!Input.GetMouseButtonDown(0)) return;
+            if (selectedUnitsPanel.Count <= 0) return;
+            SelectUnitFromRaycastResults(RaycastToUi());
+        }
+
+        private void SelectUnitFromRaycastResults(List<RaycastResult> results)
+        {
+            if (results.Count <= 0) return;
+            foreach (Transform child in transform)
             {
-                if (selectedUnitsPanel.Count <= 0) return;
-                _eventData = new PointerEventData(_eventSystem);
-                _eventData.position = Input.mousePosition;
-                List<RaycastResult> results = new List<RaycastResult>();
-                _raycaster.Raycast(_eventData, results);
-                foreach (Transform transform in transform)
-                {
-                    if (results[0].gameObject.transform == transform)
-                    {
-                        int index = transform.GetSiblingIndex();
-                        _selectionController.SelectUnitFromUI(_selectionController._selectedUnits[index]);
-                        return;
-                    }
-                }
+                if (results[0].gameObject.transform != child) continue;
+                int index = child.GetSiblingIndex();
+                _selectionController.SelectUnitFromUI(_selectionController._selectedUnits[index]);
+                return;
             }
+        }
+
+        private List<RaycastResult> RaycastToUi()
+        {
+            _eventData = new PointerEventData(_eventSystem);
+            _eventData.position = Input.mousePosition;
+            var results = new List<RaycastResult>();
+            _raycaster.Raycast(_eventData, results);
+            return results;
         }
 
         private void UpdatePanel(List<GameObject> selectedUnits)
@@ -85,7 +93,8 @@ namespace RTS
             {
                 children.Add(child.gameObject);
             }
+
             return children;
         }
-    } 
+    }
 }

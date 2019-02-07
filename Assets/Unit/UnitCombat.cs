@@ -22,7 +22,6 @@ namespace RTS
             if (!_target) { return; }
             _actionCooldown += Time.deltaTime;
             if (_agent.destination != _target.transform.position) _agent.SetDestination(_target.transform.position);
-            //Debug.Log(_agent.pathStatus);
             Attack();
         }
 

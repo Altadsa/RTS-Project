@@ -14,7 +14,7 @@ namespace RTS
         float _currentCarryLoad = 0;
         Headquarters _dropOffPoint;
 
-        bool isDroppingResources;
+        bool _isDroppingResources;
 
         private void Start()
         {
@@ -26,7 +26,7 @@ namespace RTS
         {
             if (!_target) return;
             _actionCooldown += Time.deltaTime;
-            if (!isDroppingResources)
+            if (!_isDroppingResources)
             {
                 if (_agent.destination != _target.transform.position) _agent.SetDestination(_target.transform.position);
                 WorkIfWithinRange();
@@ -38,7 +38,6 @@ namespace RTS
         private void WorkIfWithinRange()
         {
             float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
-            Debug.Log(distanceToTarget);
             if (distanceToTarget <= actionRange)
             {
                 GatherResource();
@@ -91,7 +90,7 @@ namespace RTS
                 _resourceAmount = 0;
                 _currentCarryLoad = 0;
                 Vector3 tarPos = _target.transform.position;
-                isDroppingResources = false;
+                _isDroppingResources = false;
                 _agent.SetDestination(tarPos);
             }
         }
@@ -135,7 +134,7 @@ namespace RTS
         {
             Vector3 hDest = _dropOffPoint.transform.position;
             _agent.SetDestination(hDest);
-            isDroppingResources = true;
+            _isDroppingResources = true;
         }
     }
 }

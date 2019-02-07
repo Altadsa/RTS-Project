@@ -84,10 +84,9 @@ namespace RTS
 
         private void BuildUnit(UnitBuildData unitInstance)
         {
-            if (_buildQueue.Count >= 5) return;
-            if (CanBuyUnit(unitInstance))
+            bool canBuild = _buildQueue.Count < 5 && CanBuyUnit(unitInstance);
+            if (canBuild) return;
             {
-
                 _buildQueue.Enqueue(unitInstance);
                 ResourceData.AmendGold(-unitInstance.GoldCost);
                 ResourceData.AmendFood(-unitInstance.FoodCost);

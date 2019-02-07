@@ -11,20 +11,30 @@ namespace RTS
         public float _timeToAction = 2;
         public float actionRange = 5;
 
+        private int _walkLayer = (int)Layer.Walkable;
+
         public void Target(RaycastHit hit)
         {
             _agent.isStopped = false;
-            if (!hit.collider.GetComponent<EnemyUnit>() && !hit.collider.GetComponent<Resource>() && !hit.collider.GetComponent<ConstructionBuilding>() && !hit.collider.GetComponent<Building>())
+            GameObject hitGo = hit.collider.gameObject;
+            if (hitGo.layer == _walkLayer)
             {
-                _target = null;
-                Vector3 location = hit.point;
-                _agent.SetDestination(location);
+                MoveToPoint(hit);
             }
             else
             {
-                _target = hit.collider.gameObject;
+                _target = hitGo;
             }
         }
 
-    } 
+        public void MoveToPoint(RaycastHit hit)
+        {
+            _target = null;
+            Vector3 location = hit.point;
+            _agent.SetDestination(location);
+        }
+
+
+        //!hit.collider.GetComponent<EnemyUnit>() && !hit.collider.GetComponent<Resource>() && !hit.collider.GetComponent<ConstructionBuilding>() && !hit.collider.GetComponent<Building>()
+    }
 }

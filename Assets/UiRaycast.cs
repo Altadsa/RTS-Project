@@ -7,7 +7,6 @@ namespace RTS
 {
     public class UiRaycast : MonoBehaviour
     {
-
         public static bool RaycastToUi { get; private set; }
 
         static EventSystem _eventSystem;
@@ -28,16 +27,17 @@ namespace RTS
             List<RaycastResult> results = new List<RaycastResult>();
 
             _Graycaster.Raycast(_eventData, results);
-            int layermask = 1 << (int)Layer.Ui;
+            int layermask = 1 << (int) Layer.Ui;
             foreach (RaycastResult result in results)
             {
-                int resultLayer = 1 << (int)result.gameObject.layer;
-                if (resultLayer== layermask)
+                int resultLayer = 1 << (int) result.gameObject.layer;
+                if (resultLayer == layermask)
                 {
                     return true;
                 }
             }
+
             return false;
         }
-    } 
+    }
 }
