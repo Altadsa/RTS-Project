@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RTS
@@ -12,7 +11,7 @@ namespace RTS
 
         public List<GameObject> _selectedUnits { get; private set; }
         [HideInInspector]
-        public List<GameObject> selectableUnits;
+        public List<GameObject> _selectableUnits;
 
         Building _selectedBuilding;
 
@@ -22,7 +21,7 @@ namespace RTS
         private void Awake()
         {
             _selectedUnits = new List<GameObject>();
-            selectableUnits = new List<GameObject>();
+            _selectableUnits = new List<GameObject>();
             GetComponent<UnitRaycaster>().UpdateActiveLayer += UpdateActiveLayer;
         }
 
@@ -56,9 +55,6 @@ namespace RTS
                 case Layer.Walkable:
                     DeselectAllUnits();
                     break;
-                case Layer.Ui:
-                    //Do nothing
-                    break;
                 default:
                     return;
             }
@@ -78,53 +74,35 @@ namespace RTS
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 if (!iUnit.isSelected)
-                {
                     SelectUnit(iUnit);
-                }
                 else
-                {
                     DeselectUnit(iUnit);
-                }
             }
             else
             {
                 DeselectAllUnits();
                 if (iUnit)
-                {
                     SelectUnit(iUnit);
-                }
             }
         }
 
         public void SelectUnitsInBox(Rect selectionRect)
         {
             if (UiRaycast.IsRaycastingToUi()) return;
-            List<GameObject> removableUnits = new List<GameObject>();
             if (!Input.GetKey(KeyCode.LeftControl) && !_selectedBuilding)
             {
                 DeselectAllUnits();
             }
 
-            foreach (GameObject iUnit in selectableUnits)
+            _selectableUnits.RemoveAll(unit => unit == null);
+            foreach (GameObject iUnit in _selectableUnits)
             {
-                if (iUnit != null)
+                Vector3 unitVpos = Camera.main.WorldToViewportPoint(iUnit.transform.position);
+                bool isUnitInRect = selectionRect.Contains(unitVpos, true);
+                if (isUnitInRect)
                 {
-                    if (selectionRect.Contains(Camera.main.WorldToViewportPoint(iUnit.transform.position), true))
-                    {
-                        SelectUnit(iUnit.GetComponent<PlayerUnit>());
-                    }
+                    SelectUnit(iUnit.GetComponent<PlayerUnit>());
                 }
-                else
-                {
-                    removableUnits.Add(iUnit);
-                }
-
-                if (removableUnits.Count <= 0) continue;
-                foreach (GameObject removableUnit in removableUnits)
-                {
-                    selectableUnits.Remove(removableUnit);
-                }
-                removableUnits.Clear();
             }
         }
 
@@ -133,6 +111,8 @@ namespace RTS
             _selectedUnits.Add(iUnit.gameObject);
             iUnit.Select();
             UpdateSelectedUnits();
+            UnitAction unitAction = _selectableUnits[0].GetComponent<UnitAction>();
+            UserInterface.Instance.LoadUnitActionMenu(unitAction);
         }
 
         private void DeselectUnit(PlayerUnit iUnit)
@@ -145,23 +125,10 @@ namespace RTS
         private void DeselectAllUnits()
         {
             if (_selectedBuilding) DeselectBuilding();
-            List<GameObject> deadUnits = new List<GameObject>();
             if (_selectedUnits.Count > 0)
-            {
-                foreach (GameObject iUnit in _selectedUnits)
-                {
-                    if (!iUnit) deadUnits.Add(iUnit);
-                    else
-                    {
-                        PlayerUnit instance = iUnit.GetComponent<PlayerUnit>();
-                        instance.Deselect();
-                    }
-                }
-                foreach (var deadUnit in deadUnits)
-                {
-                    _selectedUnits.Remove(deadUnit);
-                }
-                deadUnits.Clear();
+            {   
+                _selectedUnits.RemoveAll(u => u == null);
+                _selectedUnits.ForEach(delegate(GameObject unit) { unit.GetComponent<PlayerUnit>().Deselect(); });
                 _selectedUnits.Clear();
                 UpdateSelectedUnits();
             }
@@ -169,8 +136,7 @@ namespace RTS
 
         private void UpdateSelectedUnits()
         {
-            if (updateSelectedUnits != null)
-                updateSelectedUnits(_selectedUnits);
+            updateSelectedUnits?.Invoke(_selectedUnits);
         }
 
         private void SelectBuilding()

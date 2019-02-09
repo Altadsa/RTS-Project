@@ -6,36 +6,26 @@ namespace RTS
 {
     public class Headquarters : MonoBehaviour
     {
+        [SerializeField] private Transform _resourceDropOff;
+        public Vector3 DropOffPoint
+        {
+            get { return _resourceDropOff.position; }
+        }
 
         public void DropOffResources(ResourceType resource, int amount)
         {
             switch (resource)
             {
                 case ResourceType.Food:
-                    AddFood(amount);
+                    ResourceData.AmendFood(amount);
                     break;
                 case ResourceType.Gold:
-                    AddGold(amount);
+                    ResourceData.AmendGold(amount);
                     break;
                 case ResourceType.Timber:
-                    AddTimber(amount);
+                    ResourceData.AmendTimber(amount);
                     break;
             }
-        }
-
-        private void AddGold(int amount)
-        {
-            ResourceData.AmendGold(amount);
-        }
-
-        private void AddTimber(int amount)
-        {
-            ResourceData.AmendTimber(amount);
-        }
-
-        private void AddFood(int amount)
-        {
-            ResourceData.AmendFood(amount);
         }
 
     }

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 namespace RTS
 {
     public class UserInterface : MonoBehaviour
     {
+        [SerializeField] GameObject _buttonPrefab;
         [SerializeField] GameObject _buttonsPanel;
         [SerializeField] GameObject _buildingSelection;
         [SerializeField] GameObject _unitSelection;
@@ -23,11 +25,28 @@ namespace RTS
             }
         }
 
+        private void Start()
+        {
+            ClearUI();
+        }
+
         private void ClearButtonsMenu()
         {
             foreach (Transform child in _buttonsPanel.transform)
             {
                 Destroy(child.gameObject);
+            }
+        }
+
+        public void LoadUnitActionMenu(UnitAction action)
+        {
+            ClearButtonsMenu();
+            BuildingMenu menu = _buttonsPanel.GetComponent<BuildingMenu>();
+            foreach (var building in PlayerManager._availableBuildings)
+            {
+                GameObject button = Instantiate(_buttonPrefab, _buttonsPanel.transform);
+                button.GetComponent<Image>().sprite = building.Icon;
+                button.GetComponent<Button>().onClick.AddListener(delegate { menu.ConstructBuilding(building); });
             }
         }
 

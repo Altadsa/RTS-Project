@@ -9,9 +9,7 @@ namespace RTS
         public Image _productionProgress;
         public Image _itemInProduction;
         public Image[] _itemsInQueue;
-        public Sprite emptyQueuePosition;
-
-        UnitBuildData[] _buildQueueCopy = new UnitBuildData[5];
+        public Sprite _emptyQueuePosition;
 
         private static BuildingInfo _instance;
         private static readonly object padlock = new object();
@@ -45,35 +43,25 @@ namespace RTS
                 ClearProductionItem();
                 return;
             }
-            ClearQueueCopy();
             UpdateQueue(building);
         }
 
         private void UpdateQueue(Building building)
         {
             var buildingQueue = building.Queue;
-            buildingQueue.CopyTo(_buildQueueCopy, 0);
-            _itemInProduction.sprite = _buildQueueCopy[0].QueueImage;
-            for (int i = 1; i < _buildQueueCopy.Length; i++)
+            _itemInProduction.sprite = buildingQueue[0].QueueImage;
+            for (int i = 1; i < 5; i++)
             {
-                if (_buildQueueCopy[i] == null)
-                    _itemsInQueue[i - 1].sprite = emptyQueuePosition;
+                if (i >= buildingQueue.Count)
+                    _itemsInQueue[i - 1].sprite = _emptyQueuePosition;
                 else
-                    _itemsInQueue[i - 1].sprite = _buildQueueCopy[i].QueueImage;
+                    _itemsInQueue[i - 1].sprite = buildingQueue[i].QueueImage;
             }
         }
 
         private void ClearProductionItem()
         {
-            _itemInProduction.sprite = emptyQueuePosition;
-        }
-
-        private void ClearQueueCopy()
-        {
-            for (int i = 0; i < _buildQueueCopy.Length; i++)
-            {
-                _buildQueueCopy[i] = null;
-            }
+            _itemInProduction.sprite = _emptyQueuePosition;
         }
     } 
 

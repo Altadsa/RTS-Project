@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using UnityEngine.AI;
+using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 namespace RTS
 {
@@ -39,6 +39,7 @@ namespace RTS
 
         private void MoveBuildingToMousePosition()
         {
+            if (!buildingInstance) return;
             RaycastHit hit;
             int layerMask = 1 << (int)Layer.Walkable;
             bool hasHitTerrain = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask);
@@ -54,7 +55,7 @@ namespace RTS
             buildingInstance = Instantiate(_buildData.ConstructionPrefab);
             buildingInstance.GetComponent<ConstructionBuilding>().Setup(_buildData.BuildingPrefab);
             Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
-            buildingInstance.transform.SetParent(parent, false);
+            buildingInstance.transform.SetParent(parent, true);
         }
 
         public void ConstructBuilding(BuildingBuildData buildData)
@@ -66,6 +67,8 @@ namespace RTS
 
         private void DeselectBuilding()
         {
+            if (!buildingInstance) return;
+            if (!CanPlaceBuilding()) return;
             if (Input.GetMouseButtonDown(0))
             {
                 isBuildingMoving = false;
@@ -90,6 +93,37 @@ namespace RTS
             //float pY = Mathf.Floor(pos.y);
             float pZ = Mathf.Floor(pos.z);
             return new Vector3(pX, pos.y, pZ);
+        }
+
+        private bool CanPlaceBuilding()
+        { 
+            var verts = buildingInstance.GetComponent<MeshFilter>().mesh.vertices;
+            var obstactles = FindObjectsOfType<NavMeshObstacle>();
+            var cols = new List<Collider>();
+            foreach (var o in obstactles)
+            {
+                if (o.gameObject != buildingInstance.gameObject)
+                    cols.Add(o.GetComponent<Collider>());
+            }
+
+            foreach (var vert in verts)
+            {
+                NavMeshHit hit;
+                Vector3 worldPos = buildingInstance.transform.TransformPoint(vert);
+                NavMesh.SamplePosition(worldPos, out hit, 20, NavMesh.AllAreas);
+
+                bool onXAxis = Mathf.Abs(hit.position.x - worldPos.x) < 0.5f;
+                bool onZAxis = Mathf.Abs(hit.position.z - worldPos.z) < 0.5f;
+
+                bool hitCollider = cols.Any(c => c.bounds.Contains(worldPos));
+
+                if (hitCollider)
+                {
+                    Debug.Log("Can't place that there...");
+                    return false;
+                }
+            }
+            return true;
         }
 
     } 

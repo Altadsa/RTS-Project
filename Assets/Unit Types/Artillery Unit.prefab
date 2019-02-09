@@ -221,8 +221,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3510259674571187249}
   - component: {fileID: 4946936047943088278}
-  - component: {fileID: 1894123781786408181}
   - component: {fileID: 4423814587422182141}
+  - component: {fileID: 2571809031575940928}
   m_Layer: 2
   m_Name: UnitUI
   m_TagString: Untagged
@@ -271,18 +271,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1894123781786408181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6103152144374301729}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1f9f5e977909e9458473ca55c5215de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &4423814587422182141
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -296,6 +284,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2571809031575940928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6103152144374301729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24986fdb434dcc7478bc010005e900d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8873932115636542036
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,8 +422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da348c8d0dbdba4498899e3ad30b416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 16
-  attackSpeed: 4
+  _timeToAction: 2
+  actionRange: 5
   damage: 50
 --- !u!114 &7464352874115551029
 MonoBehaviour:
@@ -438,6 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 80
+  _healthUi: {fileID: 0}
   armourValue: 0
 --- !u!195 &8873932115636542045
 NavMeshAgent:

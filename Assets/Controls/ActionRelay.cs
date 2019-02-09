@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RTS
 {
-    public class UnitActionController : MonoBehaviour
+    public class ActionRelay : MonoBehaviour
     {
         private Layer _currentLayer;
         private RaycastHit _layerHit;

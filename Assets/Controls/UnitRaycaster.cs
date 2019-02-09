@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace RTS
 {
-    [RequireComponent(typeof(UnitActionController))]
+    [RequireComponent(typeof(ActionRelay))]
     [RequireComponent(typeof(SelectionController))]
     public class UnitRaycaster : MonoBehaviour
     {

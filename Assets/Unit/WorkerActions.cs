@@ -5,45 +5,53 @@ using UnityEngine.AI;
 
 namespace RTS
 {
-    public class UnitWork : UnitAction
+    public class WorkerActions : UnitAction
     {
 
         ResourceType _resourceToWork;
         int _resourceAmount = 0;
         float _maxCarryLoad = 5;
         float _currentCarryLoad = 0;
-        Headquarters _dropOffPoint;
+        Headquarters _headquarters;
 
         bool _isDroppingResources;
 
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _dropOffPoint = FindObjectOfType<Headquarters>();
+            _headquarters = FindObjectOfType<Headquarters>();
         }
 
         private void Update()
         {
             if (!_target) return;
             _actionCooldown += Time.deltaTime;
+            MoveToWork();
             if (!_isDroppingResources)
             {
-                if (_agent.destination != _target.transform.position) _agent.SetDestination(_target.transform.position);
                 WorkIfWithinRange();
                 return;
             }
             DropResourcesAndReturnToWork();
         }
 
+        private void MoveToWork()
+        {
+            _agent.SetDestination(_target.transform.position);
+        }
+
         private void WorkIfWithinRange()
         {
+            if (!IsInRange()) return;
+            GatherResource();
+            ConstructBuilding();
+            RepairBuilding();
+        }
+
+        private bool IsInRange()
+        {
             float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
-            if (distanceToTarget <= actionRange)
-            {
-                GatherResource();
-                ConstructBuilding();
-                RepairBuilding();
-            }
+            return distanceToTarget <= actionRange;
         }
 
         private void GatherResource()
@@ -82,17 +90,22 @@ namespace RTS
         private void DropResourcesAndReturnToWork()
         {
             Vector3 pos = transform.position;
-            Vector3 hqPos = _dropOffPoint.transform.position;
+            Vector3 hqPos = _headquarters.DropOffPoint;
             float distToHq = Vector3.Distance(pos, hqPos);
             if (distToHq <= actionRange)
             {
-                _dropOffPoint.DropOffResources(_resourceToWork, _resourceAmount);
-                _resourceAmount = 0;
-                _currentCarryLoad = 0;
-                Vector3 tarPos = _target.transform.position;
-                _isDroppingResources = false;
-                _agent.SetDestination(tarPos);
+                _headquarters.DropOffResources(_resourceToWork, _resourceAmount);
+                ReturnToWork();
             }
+        }
+
+        private void ReturnToWork()
+        {
+            _resourceAmount = 0;
+            _currentCarryLoad = 0;
+            Vector3 tarPos = _target.transform.position;
+            _isDroppingResources = false;
+            _agent.SetDestination(tarPos);
         }
 
         private void Gather(Resource resource)
@@ -132,7 +145,7 @@ namespace RTS
 
         private void ReturnToHeadquarters()
         {
-            Vector3 hDest = _dropOffPoint.transform.position;
+            Vector3 hDest = _headquarters.DropOffPoint;
             _agent.SetDestination(hDest);
             _isDroppingResources = true;
         }

@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 namespace RTS
 {
+    [RequireComponent(typeof(SelectionController))]
+    [RequireComponent(typeof(ActionRelay))]
     public class UnitInputController : MonoBehaviour
     {
         private UnitRaycaster _raycaster;
         Vector3 _mousePos1, _mousePos2;
 
         private SelectionController _selectionController;
-        private UnitActionController _actionController;
+        private ActionRelay _actionController;
 
         private void Start()
         {
             _selectionController = GetComponent<SelectionController>();
-            _actionController = GetComponent<UnitActionController>();
+            _actionController = GetComponent<ActionRelay>();
         }
 
         private void Update()

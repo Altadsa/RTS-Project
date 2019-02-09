@@ -1,42 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using GEV;
-using UnityEngine.Serialization;
+using System;
 
 namespace RTS
 {
+    [RequireComponent(typeof(BuildingActions))]
     public class Building : MonoBehaviour
     {
-        public GameObject buildButton;
-        public UnitBuildData[] unitPrefabs;
-        GameObject spawnPoint;
+        Vector3 spawnPoint;
         float _timeSpentBuilding = 0;
-        Queue<UnitBuildData> _buildQueue = new Queue<UnitBuildData>(5);
+        List<UnitBuildData> _buildQueue = new List<UnitBuildData>();
+
+        BuildingActions _actions;
 
         public delegate void UpdateBuildingInfo(Building building, float buildPercent);
         public event UpdateBuildingInfo UpdateInfo;
 
-        public Queue<UnitBuildData> Queue { get { return _buildQueue; } }
+        public List<UnitBuildData> Queue { get { return _buildQueue; } }
+
+        private void Start()
+        {
+            _actions = GetComponent<BuildingActions>();
+        }
 
         private void Update()
+        {
+            ProcessQueue();
+        }
+
+        private void ProcessQueue()
         {
             if (_buildQueue.Count > 0)
             {
                 _timeSpentBuilding += Time.deltaTime;
-                UnitBuildData data = _buildQueue.Peek();
+                UnitBuildData data = _buildQueue[0];
                 UpdateBuildInfo(data);
                 if (_timeSpentBuilding >= data.BuildTime)
                 {
-                    transform.GetChild(0).transform.position = (transform.forward * 5) + transform.position;
+                    transform.GetChild(0).transform.position = spawnPoint;
                     GameObject unit = Instantiate(data.Unit, transform.GetChild(0));
-                    _buildQueue.Dequeue();
+                    _buildQueue.Remove(data);
                     if (_buildQueue.Count <= 0) UpdateInfo(this, 0);
                     _timeSpentBuilding = 0;
-
                 }
             }
-
         }
 
         private void UpdateBuildInfo(UnitBuildData data)
@@ -44,6 +52,11 @@ namespace RTS
             if (UpdateInfo == null) return;
             float progress = _timeSpentBuilding / data.BuildTime;
             UpdateInfo(this, progress);
+        }
+
+        public void AddToQueue(UnitBuildData data)
+        {
+            _buildQueue.Add(data);
         }
 
         public void Select()
@@ -59,21 +72,13 @@ namespace RTS
 
         public void LoadBuildingInterface()
         {
-            SetupButtons();
             SetupBuildingInfo();
+            SetupButtons();
         }
 
         private void SetupButtons()
         {
-            List<GameObject> buttons = new List<GameObject>();
-            foreach (UnitBuildData unitInstance in unitPrefabs)
-            {
-                GameObject buttonInstance = Instantiate(buildButton);
-                buttonInstance.GetComponentInChildren<Text>().text = unitInstance.name;
-                buttonInstance.GetComponent<Button>().onClick.AddListener(delegate { BuildUnit(unitInstance); });
-                buttons.Add(buttonInstance);
-            }
-            UserInterface.Instance.LoadMenuButtons(buttons);
+            UserInterface.Instance.LoadMenuButtons(_actions.CreateUnitButtons());
         }
 
         private void SetupBuildingInfo()
@@ -82,25 +87,10 @@ namespace RTS
             BuildingInfo.Instance.LoadBuildingInfo(this);
         }
 
-        private void BuildUnit(UnitBuildData unitInstance)
+        private void SetDefaultSpawnPoint()
         {
-            bool canBuild = _buildQueue.Count < 5 && CanBuyUnit(unitInstance);
-            if (canBuild) return;
-            {
-                _buildQueue.Enqueue(unitInstance);
-                ResourceData.AmendGold(-unitInstance.GoldCost);
-                ResourceData.AmendFood(-unitInstance.FoodCost);
-                ResourceData.AmendTimber(-unitInstance.TimberCost);
-            }
+            spawnPoint = (transform.forward * 5) + transform.position;
         }
 
-        private bool CanBuyUnit(UnitBuildData data)
-        {
-            bool canAfford = !(data.GoldCost > ResourceData.Gold);
-            if (data.TimberCost > ResourceData.Timber) canAfford = false;
-            if (data.FoodCost > ResourceData.Food) canAfford = false;
-            return canAfford;
-        }
-
-    } 
+    }
 }

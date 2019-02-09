@@ -6,20 +6,27 @@ namespace RTS
     {
         [SerializeField]
         protected float maxHealth = 100;
-
         protected float health = 100;
+
+        private GameObject _healthUi;
+
+        public float armourValue = 0;
 
         public delegate void OnHealthChanged(float healthAsPercentage);
         public event OnHealthChanged onHealthChanged;
 
+        public abstract void TakeDamage(float damage);
+
         private void Awake()
         {
             health = maxHealth;
+            _healthUi = GetComponentInChildren<HealthUI>().gameObject;
         }
 
         private void Start()
         {
             UpdateHealth();
+            ToggleUi();
         }
 
         void Update()
@@ -27,9 +34,18 @@ namespace RTS
             HandleUnitHealth();
         }
 
+        private void OnMouseOver()
+        {
+            _healthUi.SetActive(true);
+        }
+
+        private void OnMouseExit()
+        {
+            _healthUi.SetActive(false);
+        }
+
         private void HandleUnitHealth()
         {
-            //UpdateHealth();
             Kill();
         }
 
@@ -50,6 +66,9 @@ namespace RTS
             }
         }
 
-        public virtual void TakeDamage(float damage) { }
+        private void ToggleUi()
+        {
+            _healthUi.SetActive(!_healthUi.activeInHierarchy);
+        }
     }
 }

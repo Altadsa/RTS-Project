@@ -4,9 +4,9 @@ using UnityEngine.UI;
 namespace RTS
 {
     [RequireComponent(typeof(Canvas))]
-    public class BuildingUI : MonoBehaviour
+    public class HealthUI : MonoBehaviour
     {
-        BuildingHealth buildingHealth;
+        Health _health;
         RawImage barMask;
         Image healthBar;
         Canvas uiCanvas;
@@ -23,13 +23,13 @@ namespace RTS
 
         private void Initialize()
         {
-            buildingHealth = GetComponentInParent<BuildingHealth>();
+            _health = GetComponentInParent<BuildingHealth>();
             barMask = GetComponentInChildren<RawImage>();
             healthBar = GetComponentInChildren<Image>();
             uiCanvas = GetComponent<Canvas>();
-            if (buildingHealth && healthBar)
+            if (_health && healthBar)
             {
-                buildingHealth.onHealthChanged += OnHealthChanged;
+                _health.onHealthChanged += OnHealthChanged;
             }
             uiCanvas.worldCamera = Camera.main;
         }
@@ -37,11 +37,6 @@ namespace RTS
         private void OnHealthChanged(float healthAsPercentage)
         {
             healthBar.fillAmount = healthAsPercentage;
-        }
-
-        private void UpdateBuildProgress(float buildPercentage)
-        {
-
         }
 
     }

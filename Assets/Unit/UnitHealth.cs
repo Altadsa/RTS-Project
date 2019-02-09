@@ -4,7 +4,6 @@ namespace RTS
 {
     public class UnitHealth : Health
     {
-        public int armourValue = 0;
 
         public override void TakeDamage(float damage)
         {

@@ -7,7 +7,7 @@ namespace RTS
     public class PlayerUnit : Unit
     {
         SelectionController _selectionController;
-        private UnitActionController _actionController;
+        private ActionRelay _actionController;
         UnitAction _unitAction;
 
         [HideInInspector]
@@ -21,18 +21,19 @@ namespace RTS
         private void SetupUnit()
         {
             _selectionController = FindObjectOfType<SelectionController>();
-            _actionController = FindObjectOfType<UnitActionController>();
+            _actionController = FindObjectOfType<ActionRelay>();
             _unitAction = GetComponent<UnitAction>();
             agent = GetComponent<NavMeshAgent>();
             if (_selectionController)
             {
-                _selectionController.selectableUnits.Add(gameObject);
+                _selectionController._selectableUnits.Add(gameObject);
             }
         }
 
         private void OnDestroy()
         {
-            _selectionController.selectableUnits.Remove(gameObject);
+            _selectionController._selectableUnits.Remove(gameObject);
+            Deselect();
         }
 
         private void Update()

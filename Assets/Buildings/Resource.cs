@@ -8,13 +8,6 @@ namespace RTS
         [SerializeField] int _resourcesLeft = 1500;
         [SerializeField] float _loadWeight = 1;
         [SerializeField] float _timeToWork = 2;
-        Canvas _canvas;
-
-        private void LateUpdate()
-        {
-            if (_canvas && _canvas.isActiveAndEnabled)
-                _canvas.transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
-        }
 
         public delegate void OnResourceChanged(int currentResouces);
         public event OnResourceChanged updateResources;
