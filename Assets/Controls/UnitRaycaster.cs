@@ -9,6 +9,7 @@ namespace RTS
     [RequireComponent(typeof(SelectionController))]
     public class UnitRaycaster : MonoBehaviour
     {
+
         readonly Layer[] validLayers =
         {
             Layer.Ui,

@@ -52,6 +52,12 @@ namespace RTS
         private void InstantiateBuildingIfExists()
         {
             if (buildingInstance || !_buildData) return;
+            SetupBuildingInstance();
+            UnitInputController.Instance.enabled = false;
+        }
+
+        private void SetupBuildingInstance()
+        {
             buildingInstance = Instantiate(_buildData.ConstructionPrefab);
             buildingInstance.GetComponent<ConstructionBuilding>().Setup(_buildData.BuildingPrefab);
             Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
@@ -74,6 +80,7 @@ namespace RTS
                 isBuildingMoving = false;
                 _buildData = null;
                 buildingInstance = null;
+                UnitInputController.Instance.enabled = true;
             }
         }
 
@@ -84,6 +91,7 @@ namespace RTS
                 isBuildingMoving = false;
                 Destroy(buildingInstance);
                 _buildData = null;
+                UnitInputController.Instance.enabled = true;
             }
         }
 

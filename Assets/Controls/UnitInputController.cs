@@ -8,6 +8,20 @@ namespace RTS
     [RequireComponent(typeof(ActionRelay))]
     public class UnitInputController : MonoBehaviour
     {
+        private static UnitInputController _instance;
+        private static readonly object padlock = new object();
+        public static UnitInputController Instance
+        {
+            get
+            {
+                lock(padlock)
+                {
+                    if (!_instance) _instance = FindObjectOfType<UnitInputController>();
+                    return _instance;
+                }
+            }
+        }
+
         private UnitRaycaster _raycaster;
         Vector3 _mousePos1, _mousePos2;
 
