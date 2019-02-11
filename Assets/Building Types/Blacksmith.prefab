@@ -1,49 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8757916703012188608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108043030409044551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec82f279342b49342ab2b047180fa164, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _resourceDropOff: {fileID: 7059030107695613001}
---- !u!1 &4167000383850064127
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7059030107695613001}
-  m_Layer: 12
-  m_Name: Drop Off Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7059030107695613001
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4167000383850064127}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1108043030409044570}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2445231513923275967
+--- !u!1001 &4628881654156773854
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -53,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3355105137547554552, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
       propertyPath: m_Name
-      value: Headquarters
+      value: Blacksmith
       objectReference: {fileID: 0}
     - target: {fileID: 3355105137547554533, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
@@ -114,44 +71,33 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: fc40221fca14fa646811409ea5f2f101, type: 3}
-    - target: {fileID: 3355105137547554554, guid: 464d7401fe9cef748b29f98ca327ef42,
-        type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4300000, guid: 2aee5b9bfeae71943bc27f8284fabebe, type: 3}
     - target: {fileID: 3355105137547554554, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: fc40221fca14fa646811409ea5f2f101, type: 3}
+      objectReference: {fileID: 4300000, guid: 2aee5b9bfeae71943bc27f8284fabebe, type: 3}
     - target: {fileID: 3355105137547554534, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
       propertyPath: _data.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3355105137547554534, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
       propertyPath: _data.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 7d9c2d45bece4e848b403d7db43ee942,
+      objectReference: {fileID: 11400000, guid: be6cae9b588c1164db7b9476d0de7f6f,
+        type: 2}
+    - target: {fileID: 3355105137547554534, guid: 464d7401fe9cef748b29f98ca327ef42,
+        type: 3}
+      propertyPath: _data.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f8c8abffbd7ac9c46984c87230ccd3a9,
         type: 2}
     - target: {fileID: 3355105137547554535, guid: 464d7401fe9cef748b29f98ca327ef42,
         type: 3}
       propertyPath: maxHealth
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464d7401fe9cef748b29f98ca327ef42, type: 3}
---- !u!1 &1108043030409044551 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3355105137547554552, guid: 464d7401fe9cef748b29f98ca327ef42,
-    type: 3}
-  m_PrefabInstance: {fileID: 2445231513923275967}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1108043030409044570 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3355105137547554533, guid: 464d7401fe9cef748b29f98ca327ef42,
-    type: 3}
-  m_PrefabInstance: {fileID: 2445231513923275967}
-  m_PrefabAsset: {fileID: 0}

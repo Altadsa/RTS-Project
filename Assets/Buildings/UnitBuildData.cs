@@ -10,7 +10,8 @@ namespace RTS
 
         public override void OnComplete(Building productionBuilding)
         {
-            GameObject nUnit = Instantiate(_unit, productionBuilding.spawnPoint, Quaternion.identity, productionBuilding.transform);
+            Transform unitParent = GameObject.FindGameObjectWithTag("Active Units").transform;
+            GameObject nUnit = Instantiate(_unit, productionBuilding.spawnPoint, Quaternion.identity, unitParent);
             Debug.Log("Unit Built!");
         }
 

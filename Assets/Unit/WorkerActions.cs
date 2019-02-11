@@ -26,9 +26,9 @@ namespace RTS
         {
             if (!_target) return;
             _actionCooldown += Time.deltaTime;
-            MoveToWork();
             if (!_isDroppingResources)
             {
+                MoveToWork();
                 WorkIfWithinRange();
                 return;
             }
