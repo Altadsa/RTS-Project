@@ -22,6 +22,7 @@ namespace RTS
         private void Start()
         {
             _actions = GetComponent<BuildingActions>();
+            SetDefaultSpawnPoint();
         }
 
         private void Update()

@@ -12,6 +12,7 @@ TagManager:
   - Active Buildings
   - Active Units
   - Buttons Panel
+  - Tooltip
   layers:
   - Default
   - TransparentFX

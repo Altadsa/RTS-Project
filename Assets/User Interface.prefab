@@ -689,13 +689,6 @@ MonoBehaviour:
   - {fileID: 1880424452}
   - {fileID: 1666668772}
   _productionProgress: {fileID: 59369437}
-  _itemInProduction: {fileID: 801773218}
-  _itemsInQueue:
-  - {fileID: 619501699}
-  - {fileID: 235970437}
-  - {fileID: 1880424454}
-  - {fileID: 1666668774}
-  _emptyQueuePosition: {fileID: 0}
 --- !u!1 &1163880861
 GameObject:
   m_ObjectHideFlags: 0

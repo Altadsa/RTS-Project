@@ -29,7 +29,7 @@ namespace RTS
 
         private void SelectUnitFromUi()
         {
-            if (!Input.GetMouseButtonDown(0)) return;
+            if (!Input.GetMouseButtonUp(0)) return;
             if (selectedUnitsPanel.Count <= 0) return;
             SelectUnitFromRaycastResults(RaycastToUi());
         }

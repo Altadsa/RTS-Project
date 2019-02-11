@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 namespace RTS
 {
     public class ButtonTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] GameObject _tooltip;
+        [SerializeField] Text _title;
+        [SerializeField] Text _desc;
+        [SerializeField] Text _costs;
+
+        private void Start()        
+        {
+            _tooltip.SetActive(false);
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -18,16 +27,12 @@ namespace RTS
             _tooltip.SetActive(false);
         }
 
-        private void Start()
-        {
-            _tooltip.SetActive(false);
-        }
-
         public void SetTooltipData(ProductionData data)
         {
-            Text tText = _tooltip.GetComponentInChildren<Text>();
+            _title.text = data.Name;
+            _desc.text = data.Description;
             ResourceCost cost = data.Cost;
-            tText.text = string.Format("{0}\n{1}\nGold:{2}\nTimber:{3}\nFood:{4}\nRequirements:{5}", data.Name, data.Description, cost.Gold, cost.Timber, cost.Food, data.Requirements);
+            _costs.text = string.Format(": {0}\n: {1}\n: {2}", cost.Gold, cost.Timber, cost.Food);
         }
 
     } 

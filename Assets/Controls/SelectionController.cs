@@ -103,6 +103,7 @@ namespace RTS
                 if (isUnitInRect)
                 {
                     SelectUnit(iUnit.GetComponent<PlayerUnit>());
+                    UpdateSelectedUnits();
                 }
             }
         }
