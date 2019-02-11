@@ -10,14 +10,14 @@ namespace RTS
     {
         public Vector3 spawnPoint;
         float _timeSpentBuilding = 0;
-        List<IQueueable> _buildQueue = new List<IQueueable>();
+        List<ProductionData> _buildQueue = new List<ProductionData>();
 
         BuildingActions _actions;
 
         public delegate void UpdateBuildingInfo(Building building, float buildPercent);
         public event UpdateBuildingInfo UpdateInfo;
 
-        public List<IQueueable> Queue { get { return _buildQueue; } }
+        public List<ProductionData> Queue { get { return _buildQueue; } }
 
         private void Start()
         {
@@ -34,14 +34,13 @@ namespace RTS
             if (_buildQueue.Count > 0)
             {
                 _timeSpentBuilding += Time.deltaTime;
-                IQueueable data = _buildQueue[0];
-                float timeNeeded = data.TimeNeeded();
+                ProductionData data = _buildQueue[0];
+                float timeNeeded = data.Time;
                 UpdateBuildInfo(timeNeeded);
                 if (_timeSpentBuilding >= timeNeeded)
                 {
                     data.OnComplete(this);
-                    var upgrade = data as UpgradeData;
-                    if (upgrade) UpgradeManager.CompleteUpgrade(upgrade);
+                    if (UpgradeManager.PuData.ContainsKey(data)) UpgradeManager.CompleteUpgrade(data);
 
                     _buildQueue.Remove(data);
                     if (_buildQueue.Count <= 0) UpdateInfo(this, 0);
@@ -57,7 +56,7 @@ namespace RTS
             UpdateInfo(this, progress);
         }
 
-        public void AddToQueue(IQueueable data)
+        public void AddToQueue(ProductionData data)
         {
             _buildQueue.Add(data);
         }

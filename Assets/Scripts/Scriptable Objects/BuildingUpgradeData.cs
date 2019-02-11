@@ -3,17 +3,16 @@ using System;
 
 namespace RTS
 {
-    [CreateAssetMenu (menuName = "RTS/Upgrades/Building Upgrades")]
-    public class BuildingUpgradeData : UpgradeData
+    [CreateAssetMenu (menuName = "RTS/Producible/Building Upgrades")]
+    public class BuildingUpgradeData : ProductionData
     {
-
         [SerializeField] Mesh _upgradedBuilding;
         [SerializeField] Material[] _buildingMaterials;
 
         public override void OnComplete(Building productionBuilding)
         {
             UpgradeBuilding(productionBuilding);
-            Debug.Log(string.Format("{0} Upgrade Complete!", _upgradeTitle));
+            Debug.Log(string.Format("{0} Upgrade Complete!", _title));
         }
 
         private void UpgradeBuilding(Building building)

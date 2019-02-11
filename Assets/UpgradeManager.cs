@@ -5,9 +5,9 @@ namespace RTS
 {
     public class UpgradeManager : MonoBehaviour
     {
-        [SerializeField] List<UpgradeData> _data;
-        public static Dictionary<UpgradeData, bool> _playerUpgradeData = new Dictionary<UpgradeData, bool>();
-        public static Dictionary<UpgradeData, bool> PuData { get { return _playerUpgradeData; } }
+        [SerializeField] List<ProductionData> _data;
+        public static Dictionary<ProductionData, bool> _playerUpgradeData = new Dictionary<ProductionData, bool>();
+        public static Dictionary<ProductionData, bool> PuData { get { return _playerUpgradeData; } }
 
         private void Start()
         {
@@ -17,7 +17,7 @@ namespace RTS
             }
         }
 
-        public static void CompleteUpgrade(UpgradeData data)
+        public static void CompleteUpgrade(ProductionData data)
         {
             _playerUpgradeData[data] = true;
         }
