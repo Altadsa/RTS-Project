@@ -61,6 +61,17 @@ namespace RTS
             _buildQueue.Add(data);
         }
 
+        public void RemoveFromQueue(ProductionData data)
+        {
+            _buildQueue.Remove(data);
+            if (_buildQueue.Count <= 0) { UpdateInfo(this, 0); return; }
+            if (data != _buildQueue[0])
+            {
+                _timeSpentBuilding = 0;
+                UpdateBuildInfo(_buildQueue[0].Time);
+            }
+        }
+
         public void Select()
         {
             GetComponentInChildren<Projector>().enabled = true;

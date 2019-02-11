@@ -680,6 +680,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d2a206c57f52d47bf00c62efbd810a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonPrefab: {fileID: 1063879481447104248, guid: e6d53ba01bafcdf4aa88e2fbcd4f4dee,
+    type: 3}
+  _queuePositions:
+  - {fileID: 801773216}
+  - {fileID: 619501697}
+  - {fileID: 235970435}
+  - {fileID: 1880424452}
+  - {fileID: 1666668772}
   _productionProgress: {fileID: 59369437}
   _itemInProduction: {fileID: 801773218}
   _itemsInQueue:

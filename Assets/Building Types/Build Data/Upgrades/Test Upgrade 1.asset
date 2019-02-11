@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68dd20559ee580240abcf83456f19afe, type: 3}
-  m_Name: Test Upgrade
+  m_Name: Test Upgrade 1
   m_EditorClassIdentifier: 
-  _upgradeTitle: Base Prefab Level 2
-  _upgradeIcon: {fileID: 21300000, guid: 2544151f5a620ad42accba70ed3d4cff, type: 3}
-  _cost: {x: 200, y: 200, z: 0}
-  _timeNeeded: 45
-  _requirements: []
+  _title: 
+  _description: 
+  _icon: {fileID: 0}
+  _cost:
+    _goldCost: 0
+    _timberCost: 0
+    _foodCost: 0
+  _timeNeeded: 60
+  _requirements:
+  - {fileID: 0}
   _upgradedBuilding: {fileID: 4300000, guid: fc40221fca14fa646811409ea5f2f101, type: 3}
   _buildingMaterials:
   - {fileID: 2100000, guid: fc40221fca14fa646811409ea5f2f101, type: 3}

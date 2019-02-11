@@ -27,7 +27,7 @@ namespace RTS
         {
             Text tText = _tooltip.GetComponentInChildren<Text>();
             ResourceCost cost = data.Cost;
-            tText.text = string.Format("{0}\nGold:{1}\nTimber:{2}\nFood:{3}", data.Name, cost.Gold, cost.Timber, cost.Food);
+            tText.text = string.Format("{0}\n{1}\nGold:{2}\nTimber:{3}\nFood:{4}\nRequirements:{5}", data.Name, data.Description, cost.Gold, cost.Timber, cost.Food, data.Requirements);
         }
 
     } 

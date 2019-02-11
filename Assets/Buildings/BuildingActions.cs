@@ -46,8 +46,8 @@ namespace RTS
             if (!canBuild) return;
             _building.AddToQueue(item);
             ResourceData.AmendGold(-cost.Gold);
-            ResourceData.AmendFood(-cost.Timber);
-            ResourceData.AmendTimber(-cost.Food);
+            ResourceData.AmendFood(-cost.Food);
+            ResourceData.AmendTimber(-cost.Timber);
         }
 
         private bool CanBuy(ResourceCost cost)

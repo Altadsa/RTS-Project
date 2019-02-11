@@ -113,6 +113,29 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: eb2e7929a6b530c459e11248e6a34fe8, type: 2}
+--- !u!1 &269130581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4850211043005140184, guid: 4bf9d72af7849a843bd3439c03dc010b,
+    type: 3}
+  m_PrefabInstance: {fileID: 847747181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &269130585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269130581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31682c7770bd55e4b85fceffde6b978b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+  - {fileID: 11400000, guid: be6cae9b588c1164db7b9476d0de7f6f, type: 2}
+  - {fileID: 11400000, guid: f8c8abffbd7ac9c46984c87230ccd3a9, type: 2}
+  _meleeDamage: {fileID: 0}
+  _meleeArmour: {fileID: 0}
 --- !u!1001 &304369952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1091,10 +1114,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionButtonPrefab: {fileID: 1063879481447104248, guid: d8bd53190e6026446bf8cd241926cc6b,
     type: 3}
-  _unitData:
+  _data:
   - {fileID: 11400000, guid: 79d78fd86022b2d4ca2a7f7e2100232d, type: 2}
-  _upgradeData:
-  - {fileID: 11400000, guid: c1965607b480bd54092d282626767029, type: 2}
+  - {fileID: 11400000, guid: be6cae9b588c1164db7b9476d0de7f6f, type: 2}
+  - {fileID: 11400000, guid: f8c8abffbd7ac9c46984c87230ccd3a9, type: 2}
 --- !u!114 &836711411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,8 +1436,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _meleeDmgModifier
       value: 
-      objectReference: {fileID: 11400000, guid: b2bbc68b22099e5479bd06e294c77590,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1189949445213207886, guid: e1ede4053e00a924788921d2423829f5,
         type: 3}
       propertyPath: _baseDamage
@@ -1590,8 +1612,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _meleeDmgModifier
       value: 
-      objectReference: {fileID: 11400000, guid: b2bbc68b22099e5479bd06e294c77590,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1189949445213207886, guid: e1ede4053e00a924788921d2423829f5,
         type: 3}
       propertyPath: _baseDamage

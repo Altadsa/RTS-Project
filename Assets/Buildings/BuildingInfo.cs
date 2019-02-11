@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +7,11 @@ namespace RTS
 {
     public class BuildingInfo : MonoBehaviour
     {
+        [SerializeField] GameObject _buttonPrefab;
+        [SerializeField] GameObject[] _queuePositions;
         public Image _productionProgress;
-        public Image _itemInProduction;
-        public Image[] _itemsInQueue;
-        public Sprite _emptyQueuePosition;
+
+        int _lastQueueSize = 0;
 
         private static BuildingInfo _instance;
         private static readonly object padlock = new object();
@@ -38,30 +40,58 @@ namespace RTS
         private void UpdateInfo(Building building, float progress)
         {
             _productionProgress.fillAmount = progress;
-            if (building.Queue.Count <= 0)
-            {
-                ClearProductionItem();
-                return;
-            }
-            UpdateQueue(building);
+            CreateQueueButtons(building);
         }
 
-        private void UpdateQueue(Building building)
+        private void CreateQueueButtons(Building buildingToCreateFor)
         {
-            var buildingQueue = building.Queue;
-            _itemInProduction.sprite = buildingQueue[0].Icon;
-            for (int i = 1; i < 5; i++)
+            List<ProductionData> queue = buildingToCreateFor.Queue;
+            if (_lastQueueSize != queue.Count)
             {
-                if (i >= buildingQueue.Count)
-                    _itemsInQueue[i - 1].sprite = _emptyQueuePosition;
-                else
-                    _itemsInQueue[i - 1].sprite = buildingQueue[i].Icon;
+                ClearOldButtons();
+                for (int i = 0; i < queue.Count; i++)
+                {
+                    GameObject qButton = Instantiate(_buttonPrefab, _queuePositions[i].transform);
+                    qButton.GetComponent<Image>().sprite = queue[i].Icon;
+                    ProductionData data = queue[i];
+                    Button buttonComponent = qButton.GetComponent<Button>();
+                    buttonComponent.onClick.AddListener(delegate { RefundCost(data.Cost); });
+                    buttonComponent.onClick.AddListener(delegate { RemoveFromQueue(buildingToCreateFor, data); });
+                    buttonComponent.onClick.AddListener(delegate { DestroyQueueButton(qButton); });
+                }
+                _lastQueueSize = queue.Count;
             }
         }
 
-        private void ClearProductionItem()
+        private void ClearOldButtons()
         {
-            _itemInProduction.sprite = _emptyQueuePosition;
+            foreach (var obj in _queuePositions)
+            {
+                if (obj.transform.childCount <= 0) return;
+                GameObject toDest = obj.GetComponentInChildren<Button>().gameObject;
+                if (toDest)
+                {
+                    Destroy(toDest); 
+                }
+            }
+        }
+
+
+        private void RefundCost(ResourceCost cost)
+        {
+            ResourceData.AmendGold(cost.Gold);
+            ResourceData.AmendTimber(cost.Timber);
+            ResourceData.AmendFood(cost.Food);
+        }
+
+        private void RemoveFromQueue(Building building, ProductionData dataToRemove)
+        {
+            building.RemoveFromQueue(dataToRemove);
+        }
+
+        private void DestroyQueueButton(GameObject buttonToRemove)
+        {
+            Destroy(buttonToRemove);
         }
     } 
 
