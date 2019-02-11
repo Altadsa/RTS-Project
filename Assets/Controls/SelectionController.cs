@@ -32,6 +32,7 @@ namespace RTS
                 UserInterface.Instance.LoadUnitSelection();
                 DeselectBuilding();
             }
+            if (!_selectedBuilding && _selectedUnits.Count <= 0) UserInterface.Instance.ClearUI();
         }
 
         private void UpdateActiveLayer(Layer newLayer, RaycastHit _layerHit)
@@ -111,7 +112,8 @@ namespace RTS
             _selectedUnits.Add(iUnit.gameObject);
             iUnit.Select();
             UpdateSelectedUnits();
-            UnitAction unitAction = _selectableUnits[0].GetComponent<UnitAction>();
+            WorkerActions unitAction = _selectedUnits[0].GetComponent<WorkerActions>();
+            if (unitAction)
             UserInterface.Instance.LoadUnitActionMenu(unitAction);
         }
 

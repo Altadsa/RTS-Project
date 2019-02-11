@@ -5,7 +5,8 @@ namespace RTS
 {
     public class UnitCombat : UnitAction
     {
-        public float damage;
+        public float _baseDamage;
+        [SerializeField] FloatVar _meleeDmgModifier;
 
         private void Start()
         {
@@ -14,6 +15,7 @@ namespace RTS
 
         private void Update()
         {
+            //Debug.Log(string.Format("Base Damage: {0}, Modified Damage: {1} ({2}% from modifier.", _baseDamage, _baseDamage * _meleeDmgModifier.Value, 1 - _meleeDmgModifier.Value));
             AttackTargetIfPossible();
         }
 
@@ -32,13 +34,8 @@ namespace RTS
             {
                 if (_target.GetComponent<EnemyUnit>())
                 {
-                    _target.GetComponent<EnemyUnit>().TakeDamage(damage);
+                    _target.GetComponent<EnemyUnit>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
                     _actionCooldown = 0; 
-                }
-                if (_target.GetComponent<BuildingHealth>())
-                {
-                    _target.GetComponent<BuildingHealth>().TakeDamage(damage);
-                    _actionCooldown = 0;
                 }
             }
         }

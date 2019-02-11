@@ -38,7 +38,7 @@ namespace RTS
             }
         }
 
-        public void LoadUnitActionMenu(UnitAction action)
+        public void LoadUnitActionMenu(WorkerActions action)
         {
             ClearButtonsMenu();
             BuildingMenu menu = _buttonsPanel.GetComponent<BuildingMenu>();

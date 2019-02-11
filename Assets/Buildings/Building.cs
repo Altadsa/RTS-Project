@@ -8,16 +8,16 @@ namespace RTS
     [RequireComponent(typeof(BuildingActions))]
     public class Building : MonoBehaviour
     {
-        Vector3 spawnPoint;
+        public Vector3 spawnPoint;
         float _timeSpentBuilding = 0;
-        List<UnitBuildData> _buildQueue = new List<UnitBuildData>();
+        List<IQueueable> _buildQueue = new List<IQueueable>();
 
         BuildingActions _actions;
 
         public delegate void UpdateBuildingInfo(Building building, float buildPercent);
         public event UpdateBuildingInfo UpdateInfo;
 
-        public List<UnitBuildData> Queue { get { return _buildQueue; } }
+        public List<IQueueable> Queue { get { return _buildQueue; } }
 
         private void Start()
         {
@@ -34,12 +34,15 @@ namespace RTS
             if (_buildQueue.Count > 0)
             {
                 _timeSpentBuilding += Time.deltaTime;
-                UnitBuildData data = _buildQueue[0];
-                UpdateBuildInfo(data);
-                if (_timeSpentBuilding >= data.BuildTime)
+                IQueueable data = _buildQueue[0];
+                float timeNeeded = data.TimeNeeded();
+                UpdateBuildInfo(timeNeeded);
+                if (_timeSpentBuilding >= timeNeeded)
                 {
-                    transform.GetChild(0).transform.position = spawnPoint;
-                    GameObject unit = Instantiate(data.Unit, transform.GetChild(0));
+                    data.OnComplete(this);
+                    var upgrade = data as UpgradeData;
+                    if (upgrade) UpgradeManager.CompleteUpgrade(upgrade);
+
                     _buildQueue.Remove(data);
                     if (_buildQueue.Count <= 0) UpdateInfo(this, 0);
                     _timeSpentBuilding = 0;
@@ -47,14 +50,14 @@ namespace RTS
             }
         }
 
-        private void UpdateBuildInfo(UnitBuildData data)
+        private void UpdateBuildInfo(float data)
         {
             if (UpdateInfo == null) return;
-            float progress = _timeSpentBuilding / data.BuildTime;
+            float progress = _timeSpentBuilding / data;
             UpdateInfo(this, progress);
         }
 
-        public void AddToQueue(UnitBuildData data)
+        public void AddToQueue(IQueueable data)
         {
             _buildQueue.Add(data);
         }

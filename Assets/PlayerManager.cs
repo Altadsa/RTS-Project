@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace RTS
 {
+    [RequireComponent(typeof(UpgradeManager))]
     public class PlayerManager : MonoBehaviour
     {
         public List<BuildingBuildData> _dataToSet = new List<BuildingBuildData>();
         public static List<BuildingBuildData> _availableBuildings { get; private set; }
+
+        public static int a = 10;
 
         void Start()
         {

@@ -25,10 +25,11 @@ namespace RTS
             _tooltip.SetActive(false);
         }
 
-        public void SetTooltipData(UnitBuildData data)
+        public void SetTooltipData(IQueueable data)
         {
             Text tText = _tooltip.GetComponentInChildren<Text>();
-            tText.text = string.Format("{0}\nGold:{1}\nTimber:{2}\nFood:{3}", data.Unit.name, data.GoldCost, data.TimberCost, data.FoodCost);
+            Vector3Int cost = data.Cost();
+            tText.text = string.Format("{0}\nGold:{1}\nTimber:{2}\nFood:{3}", data.Name(), cost.x, cost.y, cost.z);
         }
 
     } 

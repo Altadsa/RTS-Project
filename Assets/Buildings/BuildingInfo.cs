@@ -49,13 +49,13 @@ namespace RTS
         private void UpdateQueue(Building building)
         {
             var buildingQueue = building.Queue;
-            _itemInProduction.sprite = buildingQueue[0].QueueImage;
+            _itemInProduction.sprite = buildingQueue[0].Icon();
             for (int i = 1; i < 5; i++)
             {
                 if (i >= buildingQueue.Count)
                     _itemsInQueue[i - 1].sprite = _emptyQueuePosition;
                 else
-                    _itemsInQueue[i - 1].sprite = buildingQueue[i].QueueImage;
+                    _itemsInQueue[i - 1].sprite = buildingQueue[i].Icon();
             }
         }
 
