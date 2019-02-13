@@ -30,30 +30,34 @@ namespace RTS
         public void LoadBuildingInfo(Building building)
         {
             building.UpdateInfo += UpdateInfo;
+            if (building != _lastBuilding)
+                CreateQueueButtons(building);
         }
 
         public void ClearBuildingInfo(Building building)
         {
             building.UpdateInfo -= UpdateInfo;
+            _lastBuilding = building;
         }
 
         private void UpdateInfo(Building building, float progress)
         {
             _productionProgress.fillAmount = progress;
-            CreateQueueButtons(building);
-        }
+            bool buttonsNeedUpdate = _lastQueueSize != building.Queue.Count;
+            if (buttonsNeedUpdate)
+            {
+                CreateQueueButtons(building);
+            }
 
+        }
+        
         private void CreateQueueButtons(Building buildingToCreateFor)
         {
             var queue = buildingToCreateFor.Queue;
-            if (_lastBuilding != buildingToCreateFor)
-            {
-                ClearOldButtons(); 
-            }
+            _lastQueueSize = 0;
+            ClearOldButtons();
             for (int i = 0; i < queue.Count; i++)
             {
-                if (_queuePositions[i].GetComponent<Button>()) continue;
-
                 var data = queue[i] as ProductionData;
                 GameObject qButton = Instantiate(_buttonPrefab, _queuePositions[i].transform);
                 qButton.GetComponent<Image>().sprite = data.Icon;
@@ -77,7 +81,6 @@ namespace RTS
                 }
             }
         }
-
 
         private void RefundCost(ResourceCost cost)
         {

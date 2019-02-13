@@ -47,6 +47,7 @@ namespace RTS
                 GameObject button = Instantiate(_buttonPrefab, _buttonsPanel.transform);
                 button.GetComponent<Image>().sprite = building.Icon;
                 button.GetComponent<Button>().onClick.AddListener(delegate { menu.ConstructBuilding(building); });
+                button.GetComponent<ButtonTooltip>().SetTooltipData(building);
             }
         }
 
