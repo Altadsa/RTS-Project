@@ -10,14 +10,12 @@ namespace RTS
     {
         public Vector3 spawnPoint;
         float _timeSpentBuilding = 0;
-        List<ProductionData> _buildQueue = new List<ProductionData>();
+        public List<IQueueable> Queue { get; private set; } = new List<IQueueable>();
 
         BuildingActions _actions;
 
         public delegate void UpdateBuildingInfo(Building building, float buildPercent);
         public event UpdateBuildingInfo UpdateInfo;
-
-        public List<ProductionData> Queue { get { return _buildQueue; } }
 
         private void Start()
         {
@@ -32,19 +30,17 @@ namespace RTS
 
         private void ProcessQueue()
         {
-            if (_buildQueue.Count > 0)
+            if (Queue.Count > 0)
             {
                 _timeSpentBuilding += Time.deltaTime;
-                ProductionData data = _buildQueue[0];
-                float timeNeeded = data.Time;
+                IQueueable firstItem = Queue[0];
+                float timeNeeded = firstItem.Time;
                 UpdateBuildInfo(timeNeeded);
                 if (_timeSpentBuilding >= timeNeeded)
                 {
-                    data.OnComplete(this);
-                    if (UpgradeManager.PuData.ContainsKey(data)) UpgradeManager.CompleteUpgrade(data);
-
-                    _buildQueue.Remove(data);
-                    if (_buildQueue.Count <= 0) UpdateInfo(this, 0);
+                    firstItem.OnProductionComplete(this);
+                    Queue.Remove(firstItem);
+                    if (Queue.Count <= 0) UpdateInfo(this, 0);
                     _timeSpentBuilding = 0;
                 }
             }
@@ -57,19 +53,20 @@ namespace RTS
             UpdateInfo(this, progress);
         }
 
-        public void AddToQueue(ProductionData data)
+        public void AddToQueue(IQueueable data)
         {
-            _buildQueue.Add(data);
+            Queue.Add(data);
         }
 
-        public void RemoveFromQueue(ProductionData data)
+        public void RemoveFromQueue(IQueueable itemInQueue)
         {
-            _buildQueue.Remove(data);
-            if (_buildQueue.Count <= 0) { UpdateInfo(this, 0); return; }
-            if (data != _buildQueue[0])
+            Queue.Remove(itemInQueue);
+            if (Queue.Count <= 0) { UpdateInfo(this, 0); return; }
+            var firstItem = Queue[0];
+            if (itemInQueue != firstItem)
             {
                 _timeSpentBuilding = 0;
-                UpdateBuildInfo(_buildQueue[0].Time);
+                UpdateBuildInfo(firstItem.Time);
             }
         }
 
@@ -82,12 +79,18 @@ namespace RTS
         public void Deselect()
         {
             GetComponentInChildren<Projector>().enabled = false;
+            BuildingInfo.Instance.ClearBuildingInfo(this);
+            UserInterface.Instance.ClearUI();
         }
 
         public void LoadBuildingInterface()
         {
             SetupBuildingInfo();
             SetupButtons();
+            if (Queue.Count > 0)
+                UpdateBuildInfo(Queue[0].Time);
+            else
+                UpdateBuildInfo(0);
         }
 
         private void SetupButtons()

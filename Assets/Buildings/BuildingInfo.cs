@@ -10,7 +10,7 @@ namespace RTS
         [SerializeField] GameObject _buttonPrefab;
         [SerializeField] GameObject[] _queuePositions;
         public Image _productionProgress;
-
+        Building _lastBuilding;
         int _lastQueueSize = 0;
 
         private static BuildingInfo _instance;
@@ -45,22 +45,24 @@ namespace RTS
 
         private void CreateQueueButtons(Building buildingToCreateFor)
         {
-            List<ProductionData> queue = buildingToCreateFor.Queue;
-            if (_lastQueueSize != queue.Count)
+            var queue = buildingToCreateFor.Queue;
+            if (_lastBuilding != buildingToCreateFor)
             {
-                ClearOldButtons();
-                for (int i = 0; i < queue.Count; i++)
-                {
-                    GameObject qButton = Instantiate(_buttonPrefab, _queuePositions[i].transform);
-                    qButton.GetComponent<Image>().sprite = queue[i].Icon;
-                    ProductionData data = queue[i];
-                    Button buttonComponent = qButton.GetComponent<Button>();
-                    buttonComponent.onClick.AddListener(delegate { RefundCost(data.Cost); });
-                    buttonComponent.onClick.AddListener(delegate { RemoveFromQueue(buildingToCreateFor, data); });
-                    buttonComponent.onClick.AddListener(delegate { DestroyQueueButton(qButton); });
-                }
-                _lastQueueSize = queue.Count;
+                ClearOldButtons(); 
             }
+            for (int i = 0; i < queue.Count; i++)
+            {
+                if (_queuePositions[i].GetComponent<Button>()) continue;
+
+                var data = queue[i] as ProductionData;
+                GameObject qButton = Instantiate(_buttonPrefab, _queuePositions[i].transform);
+                qButton.GetComponent<Image>().sprite = data.Icon;
+                Button buttonComponent = qButton.GetComponent<Button>();
+                buttonComponent.onClick.AddListener(delegate { RefundCost(data.Cost); });
+                buttonComponent.onClick.AddListener(delegate { RemoveFromQueue(buildingToCreateFor, data); });
+                buttonComponent.onClick.AddListener(delegate { DestroyQueueButton(qButton); });
+            }
+            _lastQueueSize = queue.Count;
         }
 
         private void ClearOldButtons()
@@ -86,7 +88,8 @@ namespace RTS
 
         private void RemoveFromQueue(Building building, ProductionData dataToRemove)
         {
-            building.RemoveFromQueue(dataToRemove);
+            var data = dataToRemove as IQueueable;
+            building.RemoveFromQueue(data);
         }
 
         private void DestroyQueueButton(GameObject buttonToRemove)

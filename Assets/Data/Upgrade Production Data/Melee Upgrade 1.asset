@@ -19,7 +19,6 @@ MonoBehaviour:
     _goldCost: 150
     _timberCost: 100
     _foodCost: 0
-  _timeNeeded: 60
-  _requirements: []
   _valueToUpgrade: {fileID: 11400000, guid: 19f92c54d3f401745b76f0b462d69c06, type: 2}
   _upgradeValue: 0.1
+  _time: 60

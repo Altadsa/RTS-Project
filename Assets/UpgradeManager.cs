@@ -5,19 +5,23 @@ namespace RTS
 {
     public class UpgradeManager : MonoBehaviour
     {
-        [SerializeField] List<ProductionData> _data;
-        public static Dictionary<ProductionData, bool> _playerUpgradeData = new Dictionary<ProductionData, bool>();
-        public static Dictionary<ProductionData, bool> PuData { get { return _playerUpgradeData; } }
+
+        [SerializeField]
+        List<ProductionData> _data;
+        public static Dictionary<IRequireable, bool> _playerUpgradeData = new Dictionary<IRequireable, bool>();
+        public static Dictionary<IRequireable, bool> PuData { get { return _playerUpgradeData; } }
 
         private void Start()
         {
             foreach (var data in _data)
             {
-                _playerUpgradeData.Add(data, false);
+                var iData = (IRequireable)data;
+                if (iData == null) continue;
+                _playerUpgradeData.Add(iData, false);
             }
         }
 
-        public static void CompleteUpgrade(ProductionData data)
+        public static void CompleteUpgrade(IRequireable data)
         {
             _playerUpgradeData[data] = true;
         }

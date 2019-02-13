@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca868ef61bbb9748896fc54ea52a834, type: 3}
   m_Name: Barracks
   m_EditorClassIdentifier: 
+  _title: Barracks
+  _description: Military Building for Spawning Units
+  _icon: {fileID: 21300000, guid: 9258f2586b067ad46acd3e7915b43d32, type: 3}
+  _cost:
+    _goldCost: 0
+    _timberCost: 0
+    _foodCost: 0
+  _timeNeeded: 60
+  _requirements: []
   _constructionPrefab: {fileID: 7371665439602228155, guid: 85252862acd97dd48ba59ef2e4332537,
     type: 3}
   _buildingPrefab: {fileID: 3934330795120640308, guid: 24a05d235f51b8b49a1e56cb592e8d86,
     type: 3}
-  _goldCost: 100
-  _timberCost: 50
-  _buildingIcon: {fileID: 21300000, guid: 9258f2586b067ad46acd3e7915b43d32, type: 3}

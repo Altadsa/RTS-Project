@@ -19,6 +19,5 @@ MonoBehaviour:
     _goldCost: 150
     _timberCost: 30
     _foodCost: 5
-  _timeNeeded: 45
-  _requirements: []
   _unit: {fileID: 8873932115636542036, guid: 661322bae29f74e4188bb048d958a223, type: 3}
+  _time: 60

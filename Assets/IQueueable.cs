@@ -4,7 +4,7 @@ namespace RTS
 {
     public interface IQueueable
     {
-        void OnComplete(Building productionBuilding);
-        bool RequirementsMet();
+        float Time { get; }
+        void OnProductionComplete(Building productionBuilding);
     }
 }

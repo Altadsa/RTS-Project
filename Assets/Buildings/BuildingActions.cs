@@ -44,7 +44,8 @@ namespace RTS
             if (!item.RequirementsMet()) return;
             bool canBuild = (_building.Queue.Count < 5) && CanBuy(cost);
             if (!canBuild) return;
-            _building.AddToQueue(item);
+            var dataToAdd = item as IQueueable;
+            _building.AddToQueue(dataToAdd);
             ResourceData.AmendGold(-cost.Gold);
             ResourceData.AmendFood(-cost.Food);
             ResourceData.AmendTimber(-cost.Timber);
