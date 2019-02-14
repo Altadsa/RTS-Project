@@ -38,7 +38,17 @@ namespace RTS
             }
         }
 
-        public void LoadUnitActionMenu(WorkerActions action)
+        //public void LoadUnitActions(UnitAction unitAction)
+        //{
+        //    ClearButtonsMenu();
+        //    foreach (var action in unitAction.Actions)
+        //    {
+        //        GameObject button = Instantiate(_buttonPrefab, _buttonsPanel.transform);
+        //        button.GetComponent<Button>().onClick.AddListener(delegate { StartCoroutine(action); });
+        //    }
+        //}
+
+        public void LoadBuildingMenu()
         {
             ClearButtonsMenu();
             BuildingMenu menu = _buttonsPanel.GetComponent<BuildingMenu>();

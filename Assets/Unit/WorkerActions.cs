@@ -54,6 +54,11 @@ namespace RTS
             return distanceToTarget <= actionRange;
         }
 
+        private void SelectBuilding()
+        {
+            UserInterface.Instance.LoadBuildingMenu();
+        }
+
         private void GatherResource()
         {
             Resource resource = _target.GetComponent<Resource>();

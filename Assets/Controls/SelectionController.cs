@@ -115,7 +115,7 @@ namespace RTS
             UpdateSelectedUnits();
             WorkerActions unitAction = _selectedUnits[0].GetComponent<WorkerActions>();
             if (unitAction)
-            UserInterface.Instance.LoadUnitActionMenu(unitAction);
+                UserInterface.Instance.LoadBuildingMenu();
         }
 
         private void DeselectUnit(PlayerUnit iUnit)

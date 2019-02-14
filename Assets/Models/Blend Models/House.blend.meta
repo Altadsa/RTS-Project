@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: 04220b0ff3fe35645bbfa9d47c5368a2
+guid: 4576f6e665c416144a26dfea5b12acc7
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Stone
-    2100002: Gold
-    2100004: Wood
+    2100000: Material
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Icosphere
+    4300000: Cube
     7400000: Default Take
     9500000: //RootNode
-    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1

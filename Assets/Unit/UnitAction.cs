@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using System.Collections;
 using System;
 
 namespace RTS
@@ -12,22 +13,6 @@ namespace RTS
         protected float _actionCooldown = 0;
         public float _timeToAction = 2;
         public float actionRange = 5;
-
-        protected Dictionary<Type, ActionKeys> _actionDict = new Dictionary<Type, ActionKeys>
-        {
-            {typeof(Resource), ActionKeys.Building},
-            {typeof(ConstructionBuilding), ActionKeys.Construction},
-            {typeof(Building), ActionKeys.Resource}
-        };
-
-        protected enum ActionKeys
-        {
-            Resource,
-            Construction,
-            Building
-        };
-
-        //protected abstract void SetAction(GameObject tar);
 
         private int _walkLayer = (int)Layer.Walkable;
 
@@ -42,7 +27,6 @@ namespace RTS
             else
             {
                 _target = hitGo;
-                //SetAction(_target);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace RTS
@@ -34,10 +36,25 @@ namespace RTS
             {
                 if (_target.GetComponent<EnemyUnit>())
                 {
-                    _target.GetComponent<EnemyUnit>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
+                    _target.GetComponent<Health>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
                     _actionCooldown = 0; 
                 }
             }
+        }
+
+        private void Retreat()
+        {
+            Debug.Log("Retreating.");
+            Headquarters[] allHqs = FindObjectsOfType<Headquarters>();
+            var closest = allHqs[0];
+            foreach (var hq in allHqs)
+            {
+                float currentDistance = Vector3.Distance(transform.position, closest.transform.position);
+                float checkDistance = Vector3.Distance(transform.position, hq.transform.position);
+                if (checkDistance < currentDistance) closest = hq;
+            }
+            _target = null;
+            _agent.SetDestination(closest.DropOffPoint);
         }
 
         bool IsWithinAttackRange()
@@ -50,6 +67,11 @@ namespace RTS
             return false;
         }
 
+        bool IsAttackable()
+        {
+            return true;
+        }
+
         private void OnTriggerStay(Collider other)
         {
             if (_target || !_agent.isStopped) return;
@@ -59,11 +81,5 @@ namespace RTS
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            if (_target)
-            Gizmos.DrawWireSphere(_target.transform.position, actionRange);
-        }
     } 
 }
