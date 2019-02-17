@@ -6,9 +6,11 @@ namespace RTS
 {
     public static class ResourceData
     {
+
         public static int Gold { get; private set; }
         public static int Timber { get; private set; }
         public static int Food { get; private set; }
+        public static int MaxFood { get; private set; }
 
         public static void AmendGold(int amount)
         {
@@ -23,6 +25,11 @@ namespace RTS
         public static void AmendFood(int amount)
         {
             Food += amount;
+        }
+
+        public static void AmendMaxFood(int amount)
+        {
+            MaxFood += amount;
         }
     }
 }

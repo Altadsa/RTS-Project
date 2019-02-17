@@ -26,7 +26,7 @@ namespace RTS
         private void Start()
         {
             UpdateHealth();
-            ToggleUi();
+            _healthUi.SetActive(true);
         }
 
         void Update()

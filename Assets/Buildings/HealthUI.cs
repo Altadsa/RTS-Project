@@ -23,7 +23,7 @@ namespace RTS
 
         private void Initialize()
         {
-            _health = GetComponentInParent<BuildingHealth>();
+            _health = GetComponentInParent<Health>();
             barMask = GetComponentInChildren<RawImage>();
             healthBar = GetComponentInChildren<Image>();
             uiCanvas = GetComponent<Canvas>();

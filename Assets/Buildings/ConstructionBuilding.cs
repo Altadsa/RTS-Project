@@ -26,6 +26,7 @@ namespace RTS
         private void ConstructBuilding()
         {
             GameObject finishedBuilding = Instantiate(_buildingPrefab, transform.position, Quaternion.identity, transform.parent);
+            finishedBuilding.AddComponent<Player>()._player = GetComponent<Player>()._player;
             Destroy(gameObject);
         }
     }

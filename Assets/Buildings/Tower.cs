@@ -16,7 +16,7 @@ namespace RTS
         {
             if (targets.Count >= targets.Capacity) return;
             if (targets.Contains(other.gameObject)) return;
-            if (other.GetComponent<PlayerUnit>())
+            if (other.GetComponent<Unit>().PlayerOwner == GetComponent<Player>()._player)
             { 
                 targets.Add(other.gameObject);
             }
@@ -25,7 +25,8 @@ namespace RTS
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.GetComponent<PlayerUnit>())
+            Unit iUnit = other.GetComponent<Unit>();
+            if (targets.Contains(iUnit.gameObject))
             {
                 targets.Remove(other.gameObject);
             }

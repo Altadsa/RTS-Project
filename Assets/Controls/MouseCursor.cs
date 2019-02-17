@@ -10,10 +10,13 @@ namespace RTS
         public CursorMode cursorMode = CursorMode.Auto;
         public Vector2 hotSpot = new Vector2(-96, 96);
 
+        SelectionController _selectionController;
+
         private void Start()
         {
             Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
             FindObjectOfType<UnitRaycaster>().UpdateActiveLayer += SetMouseCursor;
+            _selectionController = GetComponentInChildren<SelectionController>();
         }
 
         private void SetMouseCursor(Layer layer, RaycastHit hit)
@@ -29,9 +32,5 @@ namespace RTS
             }
         }
 
-        private void SetBuildCursor()
-        {
-
-        }
     }
 }

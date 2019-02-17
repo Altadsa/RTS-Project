@@ -1,40 +1,35 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using System.Collections.Generic;
-using System.Collections;
-using System;
 
 namespace RTS
 {
-    public abstract class UnitAction : MonoBehaviour
+    public abstract class UnitAction : MonoBehaviour, IUnitAction
     {
         protected NavMeshAgent _agent;
         protected GameObject _target;
         protected float _actionCooldown = 0;
-        public float _timeToAction = 2;
-        public float actionRange = 5;
+        protected float _timeToAction = 2;
+        protected float actionRange = 5;
 
-        private int _walkLayer = (int)Layer.Walkable;
+        //private int _walkLayer = (int)Layer.Walkable;
 
-        public void Target(RaycastHit hit)
+        private void Start()
         {
-            _agent.isStopped = false;
-            GameObject hitGo = hit.collider.gameObject;
-            if (hitGo.layer == _walkLayer)
-            {
-                MoveToPoint(hit);
-            }
-            else
-            {
-                _target = hitGo;
-            }
+            _agent = GetComponent<NavMeshAgent>();
         }
 
-        public void MoveToPoint(RaycastHit hit)
+        public abstract bool IsTargetValid(GameObject target);
+
+        protected float DistanceToTarget(Vector3 targetPos)
         {
-            _target = null;
-            Vector3 location = hit.point;
-            _agent.SetDestination(location);
+            Vector3 myPos = transform.position;
+            return Vector3.Distance(myPos, targetPos);
+        }
+
+        protected void MoveToTarget()
+        {
+            Vector3 targetPos = _target.transform.position;
+            _agent.SetDestination(targetPos);
         }
 
     }

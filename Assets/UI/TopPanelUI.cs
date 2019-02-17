@@ -12,9 +12,9 @@ namespace RTS
 
         private void Update()
         {
-            _timberText.text = "Timber: " + ResourceData.Timber;
-            _goldText.text = "Gold: " + ResourceData.Gold;
-            _foodText.text = "Food: " + ResourceData.Food;
+            _timberText.text =  ResourceData.Timber.ToString();
+            _goldText.text =  ResourceData.Gold.ToString();
+            _foodText.text = string.Format("{0}/{1}", ResourceData.Food, ResourceData.MaxFood);
         }
     }
 }

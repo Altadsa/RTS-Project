@@ -10,6 +10,11 @@ namespace RTS
         public float _baseDamage;
         [SerializeField] FloatVar _meleeDmgModifier;
 
+        public override bool IsTargetValid(GameObject target)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -34,8 +39,8 @@ namespace RTS
             bool canAttack = (_actionCooldown >= _timeToAction) && IsWithinAttackRange();
             if (canAttack)
             {
-                if (_target.GetComponent<EnemyUnit>())
-                {
+                if (_target.GetComponent<Player>()._player != GetComponent<Player>()._player)
+                { 
                     _target.GetComponent<Health>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
                     _actionCooldown = 0; 
                 }
@@ -54,7 +59,7 @@ namespace RTS
                 if (checkDistance < currentDistance) closest = hq;
             }
             _target = null;
-            _agent.SetDestination(closest.DropOffPoint);
+            _agent.SetDestination(closest.DropPoint);
         }
 
         bool IsWithinAttackRange()
@@ -74,8 +79,10 @@ namespace RTS
 
         private void OnTriggerStay(Collider other)
         {
-            if (_target || !_agent.isStopped) return;
-            if (other.GetComponent<EnemyUnit>())
+            if (_target || _agent.remainingDistance > 1) return;
+            PlayerInformation unitPlayer = other.GetComponent<Player>()._player;
+            if (unitPlayer == null) return;
+            if (unitPlayer != GetComponent<Player>()._player)
             {
                 _target = other.gameObject;
             }

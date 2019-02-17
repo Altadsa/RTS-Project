@@ -8,6 +8,7 @@ namespace RTS
     public class BuildingMenu : MonoBehaviour
     {
         private BuildingBuildData _buildData;
+        private PlayerInformation _playerToBuildFor;
 
         bool isBuildingMoving = false;
 
@@ -60,14 +61,16 @@ namespace RTS
         {
             buildingInstance = Instantiate(_buildData.ConstructionPrefab);
             buildingInstance.GetComponent<ConstructionBuilding>().Setup(_buildData.BuildingPrefab);
+            buildingInstance.AddComponent<Player>()._player = _playerToBuildFor;
             Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
             buildingInstance.transform.SetParent(parent, true);
         }
 
-        public void ConstructBuilding(BuildingBuildData buildData)
+        public void ConstructBuilding(PlayerInformation player, BuildingBuildData buildData)
         {
             if (_buildData) return;
             _buildData = buildData;
+            _playerToBuildFor = player;
             isBuildingMoving = true;
         }
 
@@ -79,6 +82,7 @@ namespace RTS
             {
                 isBuildingMoving = false;
                 _buildData = null;
+                _playerToBuildFor = null;
                 buildingInstance = null;
                 UnitInputController.Instance.enabled = true;
             }

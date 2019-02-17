@@ -4,6 +4,7 @@ namespace RTS
 {
     public class Resource : MonoBehaviour
     {
+        [SerializeField] Transform _gatherPoint;
         [SerializeField] ResourceType _resourceType;
         [SerializeField] int _resourcesLeft = 1500;
         [SerializeField] float _loadWeight = 1;
@@ -12,7 +13,15 @@ namespace RTS
         public delegate void OnResourceChanged(int currentResouces);
         public event OnResourceChanged updateResources;
 
-        public float WorkTime() { return _timeToWork; }
+        public float WorkTime { get { return _timeToWork; } }
+        public Vector3 GatherPoint
+        {
+            get
+            {
+                if (!_gatherPoint) return transform.position;
+                return _gatherPoint.position;
+            }
+        }
 
         public float Gather()
         {

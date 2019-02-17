@@ -8,15 +8,18 @@ namespace RTS
         [SerializeField] GameObject _headquarters;
         [SerializeField] GameObject _workerUnit;
 
-        public void SetupPlayerStart(PlayerStart player, PlayerID iD)
+        public void SetupPlayerStart(PlayerInformation info)
         {
             GameObject hq = Instantiate(_headquarters);
-            hq.transform.position = player.transform.position;
-            hq.AddComponent<PlayerInfo>().SetPlayerInfo(iD);
-            GameObject unit = Instantiate(_workerUnit);
-            unit.transform.position = new Vector3(player.transform.position.x + 20, player.transform.position.y, player.transform.position.z);
-            unit.AddComponent<PlayerInfo>().SetPlayerInfo(iD);
-            //FindObjectOfType<PlayerManager>().transform.position = player.transform.position;
+            hq.transform.position = info._startPos.position;
+            hq.AddComponent<Player>()._player = info;
+            Vector3 centreSpawn = info._startPos.position + (20 * Vector3.forward);
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject nUnit = Instantiate(_workerUnit);
+                nUnit.GetComponent<Unit>().SetPlayerOwner(info);
+                nUnit.transform.position = centreSpawn + (Vector3)Random.insideUnitCircle;
+            }
         }
     } 
 }

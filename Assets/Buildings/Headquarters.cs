@@ -4,21 +4,21 @@ using UnityEngine;
 
 namespace RTS
 {
-    public class Headquarters : MonoBehaviour
+    public class Headquarters : MonoBehaviour, IDropoff
     {
         [SerializeField] private Transform _resourceDropOff;
-        public Vector3 DropOffPoint
+
+        public Vector3 DropPoint => _resourceDropOff.position;
+
+        private void OnEnable()
         {
-            get { return _resourceDropOff.position; }
+            ResourceData.AmendMaxFood(12);   
         }
 
-        public void DropOffResources(ResourceType resource, int amount)
+        public void DropResources(ResourceType resource, int amount)
         {
             switch (resource)
             {
-                case ResourceType.Food:
-                    ResourceData.AmendFood(amount);
-                    break;
                 case ResourceType.Gold:
                     ResourceData.AmendGold(amount);
                     break;

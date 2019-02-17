@@ -16,7 +16,7 @@ namespace RTS
         {
             _availableBuildings = new List<BuildingBuildData>();
             _availableBuildings.AddRange(_dataToSet);
-            ResourceData.AmendFood(500); ResourceData.AmendGold(500); ResourceData.AmendTimber(500);
+            ResourceData.AmendGold(500); ResourceData.AmendTimber(500);
         }
 
     } 

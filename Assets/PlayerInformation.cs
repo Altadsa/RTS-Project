@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerInformation : MonoBehaviour
+namespace RTS
 {
-    // Start is called before the first frame update
-    void Start()
+    [System.Serializable]
+    public class PlayerInformation
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public int _id;
+        public Color _color;
+        public bool _isAi;
+        public Transform _startPos;
+    } 
 }

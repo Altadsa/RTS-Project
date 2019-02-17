@@ -47,7 +47,7 @@ namespace RTS
             var dataToAdd = item as IQueueable;
             _building.AddToQueue(dataToAdd);
             ResourceData.AmendGold(-cost.Gold);
-            ResourceData.AmendFood(-cost.Food);
+            ResourceData.AmendFood(cost.Food);
             ResourceData.AmendTimber(-cost.Timber);
         }
 
@@ -55,7 +55,7 @@ namespace RTS
         {
             if (cost.Gold > ResourceData.Gold) return false;
             if (cost.Timber > ResourceData.Timber) return false;
-            if (cost.Food > ResourceData.Food) return false;
+            if ((cost.Food + ResourceData.Food) >= ResourceData.MaxFood) return false;
             return true;
         }
 

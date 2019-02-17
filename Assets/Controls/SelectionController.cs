@@ -5,6 +5,7 @@ namespace RTS
 {
     public class SelectionController : MonoBehaviour
     {
+        public PlayerInformation _player;
         Layer _currentLayer;
         RaycastHit _layerHit;
         GameObject _hitGo;
@@ -64,17 +65,18 @@ namespace RTS
         public void SelectUnitFromUI(GameObject unit)
         {
             DeselectAllUnits();
-            PlayerUnit pUnit = unit.GetComponent<PlayerUnit>();
+            Unit pUnit = unit.GetComponent<Unit>();
             if (pUnit)
                 SelectUnit(pUnit);
         }
 
         private void SelectUnitHit()
         {
-            PlayerUnit iUnit = _hitGo.GetComponent<PlayerUnit>();
+            Unit iUnit = _hitGo.GetComponentInParent<Unit>();
+            if (iUnit.PlayerOwner != _player) return;
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                if (!iUnit.isSelected)
+                if (!iUnit._isSelected)
                     SelectUnit(iUnit);
                 else
                     DeselectUnit(iUnit);
@@ -90,6 +92,7 @@ namespace RTS
         public void SelectUnitsInBox(Rect selectionRect)
         {
             if (UiRaycast.IsRaycastingToUi()) return;
+            DeselectBuilding();
             if (!Input.GetKey(KeyCode.LeftControl) && !_selectedBuilding)
             {
                 DeselectAllUnits();
@@ -102,23 +105,23 @@ namespace RTS
                 bool isUnitInRect = selectionRect.Contains(unitVpos, true);
                 if (isUnitInRect)
                 {
-                    SelectUnit(iUnit.GetComponent<PlayerUnit>());
+                    SelectUnit(iUnit.GetComponent<Unit>());
                     UpdateSelectedUnits();
                 }
             }
         }
 
-        private void SelectUnit(PlayerUnit iUnit)
+        private void SelectUnit(Unit iUnit)
         {
             _selectedUnits.Add(iUnit.gameObject);
             iUnit.Select();
             UpdateSelectedUnits();
-            WorkerActions unitAction = _selectedUnits[0].GetComponent<WorkerActions>();
-            if (unitAction)
+            BuildAction buildAction = _selectedUnits[0].GetComponent<BuildAction>();
+            if (buildAction)
                 UserInterface.Instance.LoadBuildingMenu();
         }
 
-        private void DeselectUnit(PlayerUnit iUnit)
+        private void DeselectUnit(Unit iUnit)
         {
             _selectedUnits.Remove(iUnit.gameObject);
             iUnit.Deselect();
@@ -129,9 +132,9 @@ namespace RTS
         {
             if (_selectedBuilding) DeselectBuilding();
             if (_selectedUnits.Count > 0)
-            {   
+            {
                 _selectedUnits.RemoveAll(u => u == null);
-                _selectedUnits.ForEach(delegate(GameObject unit) { unit.GetComponent<PlayerUnit>().Deselect(); });
+                _selectedUnits.ForEach(delegate (GameObject unit) { unit.GetComponent<Unit>().Deselect(); });
                 _selectedUnits.Clear();
                 UpdateSelectedUnits();
             }

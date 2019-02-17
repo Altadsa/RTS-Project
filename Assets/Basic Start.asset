@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8858911a8f64940a96095eaa7bb3df, type: 3}
   m_Name: Basic Start
   m_EditorClassIdentifier: 
-  _headquarters: {fileID: 0}
-  _workerUnit: {fileID: 0}
+  _headquarters: {fileID: 1108043030409044551, guid: 753214fa14d6c374cb02f57c6eb51615,
+    type: 3}
+  _workerUnit: {fileID: 7073232425734863999, guid: ae8ceb4a34fd07040a2ec49a5f07342f,
+    type: 3}

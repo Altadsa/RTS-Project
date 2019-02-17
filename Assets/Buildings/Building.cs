@@ -21,6 +21,7 @@ namespace RTS
         {
             _actions = GetComponent<BuildingActions>();
             SetDefaultSpawnPoint();
+            if (!GetComponent<Player>()) gameObject.AddComponent<Player>()._player = GameManager.Default;
         }
 
         private void Update()

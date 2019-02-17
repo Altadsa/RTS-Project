@@ -5,16 +5,23 @@ namespace RTS
     [CustomEditor(typeof(Resource))]
     public class ResourceEditor : Editor
     {
-        private SerializedProperty _sResource, _sResourceAmount, _sLoadWeight, _sWorkTime;
+        private SerializedProperty _sGatherPoint, _sResource, _sResourceAmount, _sLoadWeight, _sWorkTime;
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            SetGatherPoint();
             SetResourceType();
             SetResourceAmount();
             SetLoadWeight();
             SetTimeToWork();
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private void SetGatherPoint()
+        {
+            _sGatherPoint = serializedObject.FindProperty("_gatherPoint");
+            EditorGUILayout.PropertyField(_sGatherPoint);
         }
 
         private void SetResourceType()
