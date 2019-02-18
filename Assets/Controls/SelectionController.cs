@@ -150,7 +150,7 @@ namespace RTS
         private void SelectBuilding()
         {
             DeselectAllUnits();
-            Building building = _hitGo.GetComponent<Building>();
+            Building building = _hitGo.GetComponentInParent<Building>();
             if (!building || !IsSelectable()) return;
             _selectedBuilding = building;
             _selectedBuilding.Select();

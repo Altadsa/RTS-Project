@@ -120,13 +120,13 @@ namespace RTS
 
         private bool CanPlaceBuilding()
         { 
-            var verts = buildingInstance.GetComponent<MeshFilter>().mesh.vertices;
+            var verts = buildingInstance.GetComponentInChildren<MeshFilter>().mesh.vertices;
             var obstactles = FindObjectsOfType<NavMeshObstacle>();
             var cols = new List<Collider>();
             foreach (var o in obstactles)
             {
                 if (o.gameObject != buildingInstance.gameObject)
-                    cols.Add(o.GetComponent<Collider>());
+                    cols.Add(o.GetComponentInChildren<Collider>());
             }
 
             foreach (var vert in verts)

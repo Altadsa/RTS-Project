@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ namespace RTS
     public class GatherAction : UnitAction
     {
         Resource _resource;
+        Transform _resourceParent;
         ResourceType _resourceToWork;
         bool _isDroppingResources = false;
         Vector3 _gatherPoint;
@@ -63,19 +63,43 @@ namespace RTS
 
         IEnumerator GatherResource(Resource resource)
         {
+             _resourceParent = resource.transform.parent;
             _agent.SetDestination(_gatherPoint);
             while (DistanceToTarget(_gatherPoint) > actionRange)
             {
                 yield return new WaitForSeconds(0.5f);
             }
+            _timeToAction = _resource.WorkTime;
             while (_currentCarryLoad < _maxCarryLoad)
             {
                 yield return new WaitForSeconds(_timeToAction);
-                if (!_resource) yield break;
+                if (!_resource) { FindNewResource(); yield break; }
                 Gather(resource);
                 _actionCooldown = 0; 
             }
             StartCoroutine(DropOffResources());
+        }
+
+        private void FindNewResource()
+        {
+            Debug.Log(_resourceParent);
+            _resource = FindClosestResource();
+            _gatherPoint = _resource.GatherPoint;
+            StopAllCoroutines();
+            StartCoroutine(GatherResource(_resource));
+        }
+
+        private Resource FindClosestResource()
+        {
+            var closest = _resourceParent.GetChild(0);
+            foreach (Transform resource in _resourceParent)
+            {
+                float currentDistance = Vector3.Distance(transform.position, closest.position);
+                float checkdistance = Vector3.Distance(transform.position, resource.position);
+                if (checkdistance < currentDistance) { closest = resource; }
+            }
+            Resource newResource = closest.GetComponent<Resource>();
+            return newResource;
         }
 
         IEnumerator DropOffResources()

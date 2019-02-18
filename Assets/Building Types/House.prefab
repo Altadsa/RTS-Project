@@ -272,6 +272,16 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 17454309947643982, guid: 464d7401fe9cef748b29f98ca327ef42,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 4576f6e665c416144a26dfea5b12acc7, type: 3}
+    - target: {fileID: 1776259247913296655, guid: 464d7401fe9cef748b29f98ca327ef42,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 4576f6e665c416144a26dfea5b12acc7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 464d7401fe9cef748b29f98ca327ef42, type: 3}
 --- !u!1 &5530156293152562888 stripped
