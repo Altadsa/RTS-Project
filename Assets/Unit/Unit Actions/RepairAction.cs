@@ -12,7 +12,7 @@ namespace RTS
         public override bool IsTargetValid(GameObject target)
         {
             Building building = _target.GetComponent<Building>();
-            if (!building) return false;
+            if (!building || !IsBuildingValid()) return false;
             StartCoroutine(RepairBuilding());
             return true;
         }
@@ -33,6 +33,14 @@ namespace RTS
                 yield return new WaitForSeconds(_timeToAction);
             }
             _target = null;
+        }
+
+        private bool IsBuildingValid()
+        {
+            Player bPlayer = _buildingToRepair.GetComponent<Player>();
+            Player myPlayer = GetComponent<Player>();
+            if (bPlayer._player == myPlayer._player) return true;
+            return false;
         }
 
     } 

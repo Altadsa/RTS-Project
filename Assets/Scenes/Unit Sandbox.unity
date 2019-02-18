@@ -515,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997186193, guid: 4bf9d72af7849a843bd3439c03dc010b, type: 3}
       propertyPath: _dataToSet.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1997186193, guid: 4bf9d72af7849a843bd3439c03dc010b, type: 3}
       propertyPath: _dataToSet.Array.data[0]

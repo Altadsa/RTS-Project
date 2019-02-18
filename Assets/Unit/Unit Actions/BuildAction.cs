@@ -14,7 +14,7 @@ namespace RTS
             StopAllCoroutines();
             _target = target;
             _building = _target.GetComponent<ConstructionBuilding>();
-            if (!_building) return false;
+            if (!_building || !IsBuildingValid()) return false;
             StartCoroutine(ConstructBuilding());
             return true;
         }
@@ -38,6 +38,14 @@ namespace RTS
         private void Construct()
         {
             _building.AddConstructionProgress();
+        }
+
+        private bool IsBuildingValid()
+        {
+            Player bPlayer = _building.GetComponent<Player>();
+            Player myPlayer = GetComponent<Player>();
+            if (bPlayer._player == myPlayer._player) return true;
+            return false;
         }
     } 
 }

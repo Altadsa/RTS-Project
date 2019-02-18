@@ -20,8 +20,7 @@ namespace RTS
         }
 
         private void Update()
-        {
-         
+        {   
             if (isBuildingMoving)
             {
                 DeselectBuilding();                   
@@ -69,6 +68,7 @@ namespace RTS
         public void ConstructBuilding(PlayerInformation player, BuildingBuildData buildData)
         {
             if (_buildData) return;
+            //AssignWorkerToBuilding();
             _buildData = buildData;
             _playerToBuildFor = player;
             isBuildingMoving = true;
@@ -102,9 +102,20 @@ namespace RTS
         private Vector3 SnapToPosition(Vector3 pos)
         {
             float pX = Mathf.Floor(pos.x);
-            //float pY = Mathf.Floor(pos.y);
             float pZ = Mathf.Floor(pos.z);
             return new Vector3(pX, pos.y, pZ);
+        }
+
+        private void AssignWorkerToBuilding()
+        {
+            var selected = FindObjectsOfType<SelectionController>()
+                .Where(s => s._player == buildingInstance.GetComponent<Player>()._player)
+                .FirstOrDefault();
+            UnitActionController unit = selected._selectedUnits
+                .Where(u => u.GetComponent<BuildAction>() == true)
+                .FirstOrDefault()
+                .GetComponent<UnitActionController>();
+            //unit.Target(buildingInstance);
         }
 
         private bool CanPlaceBuilding()

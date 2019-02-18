@@ -21,5 +21,4 @@ MonoBehaviour:
     _foodCost: 0
   _constructionPrefab: {fileID: 7371665439602228155, guid: 85252862acd97dd48ba59ef2e4332537,
     type: 3}
-  _buildingPrefab: {fileID: 6159951299552671072, guid: e3bf5ee901b76734e8313c306a24bbf2,
-    type: 3}
+  _buildingPrefab: {fileID: 100000, guid: 997dd477c94f9e340b391cd309600ae3, type: 3}

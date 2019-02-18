@@ -10,7 +10,11 @@ namespace RTS
 
         public void DropResources(ResourceType type, int amount)
         {
-
+            switch (type)
+            {
+                default: ResourceData.AmendTimber(amount);
+                    return;
+            }
         }
 
     } 

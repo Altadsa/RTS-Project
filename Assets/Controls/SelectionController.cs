@@ -13,6 +13,7 @@ namespace RTS
         public List<GameObject> _selectedUnits { get; private set; }
         [HideInInspector]
         public List<GameObject> _selectableUnits;
+        public List<GameObject> _selectableBuildings;
 
         Building _selectedBuilding;
 
@@ -23,6 +24,7 @@ namespace RTS
         {
             _selectedUnits = new List<GameObject>();
             _selectableUnits = new List<GameObject>();
+            _selectableBuildings = new List<GameObject>();
             GetComponent<UnitRaycaster>().UpdateActiveLayer += UpdateActiveLayer;
         }
 
@@ -73,7 +75,7 @@ namespace RTS
         private void SelectUnitHit()
         {
             Unit iUnit = _hitGo.GetComponentInParent<Unit>();
-            if (iUnit.PlayerOwner != _player) return;
+            if (!iUnit || !IsSelectable()) return;
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 if (!iUnit._isSelected)
@@ -149,7 +151,7 @@ namespace RTS
         {
             DeselectAllUnits();
             Building building = _hitGo.GetComponent<Building>();
-            if (!building) return;
+            if (!building || !IsSelectable()) return;
             _selectedBuilding = building;
             _selectedBuilding.Select();
         }
@@ -159,6 +161,13 @@ namespace RTS
             if (!_selectedBuilding) return;
             _selectedBuilding.Deselect();
             _selectedBuilding = null;
+        }
+
+        bool IsSelectable()
+        {
+            Player tPlayer = _hitGo.GetComponentInParent<Player>();
+            if (tPlayer._player == _player) return true;
+            return false;
         }
 
     }
