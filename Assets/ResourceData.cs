@@ -1,33 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 namespace RTS
 {
-    public static class ResourceData
+    public class ResourceData
     {
 
-        public static int Gold { get; private set; }
-        public static int Timber { get; private set; }
-        public static int Food { get; private set; }
-        public static int MaxFood { get; private set; }
+        public int Gold { get; private set; }
+        public int Timber { get; private set; }
+        public int Food { get; private set; }
+        public int MaxFood { get; private set; }
 
-        public static void AmendGold(int amount)
+        public ResourceData(int g, int t)
+        {
+            Gold = g;
+            Timber = t;
+        }
+
+        public void AmendGold(int amount)
         {
             Gold += amount;
         }
 
-        public static void AmendTimber(int amount)
+        public void AmendTimber(int amount)
         {
             Timber += amount;
         }
 
-        public static void AmendFood(int amount)
+        public void AmendFood(int amount)
         {
             Food += amount;
         }
 
-        public static void AmendMaxFood(int amount)
+        public void AmendMaxFood(int amount)
         {
             MaxFood += amount;
         }

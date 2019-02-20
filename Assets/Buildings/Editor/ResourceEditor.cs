@@ -5,7 +5,7 @@ namespace RTS
     [CustomEditor(typeof(Resource))]
     public class ResourceEditor : Editor
     {
-        private SerializedProperty _sGatherPoint, _sResource, _sResourceAmount, _sLoadWeight, _sWorkTime;
+        private SerializedProperty _sGatherPoint, _sCanvas, _sResource, _sResourceAmount, _sLoadWeight, _sWorkTime;
 
         public override void OnInspectorGUI()
         {
@@ -22,6 +22,12 @@ namespace RTS
         {
             _sGatherPoint = serializedObject.FindProperty("_gatherPoint");
             EditorGUILayout.PropertyField(_sGatherPoint);
+        }
+
+        private void SetUiCanvas()
+        {
+            _sCanvas = serializedObject.FindProperty("_uiCanvas");
+            EditorGUILayout.PropertyField(_sCanvas);
         }
 
         private void SetResourceType()

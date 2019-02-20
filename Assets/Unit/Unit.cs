@@ -13,6 +13,7 @@ namespace RTS
         ActionRelay _actionController;
         UnitActionController _unitActionController;
         Projector _selectionProjector;
+        PlayerInformation _player;
 
         [HideInInspector]
         public bool _isSelected { get; private set; } = false;
@@ -28,7 +29,7 @@ namespace RTS
         private void OnDestroy()
         {
             if (!_selectionController || !_actionController) return;
-            _selectionController._selectableUnits.Remove(gameObject);
+            _selectionController.SelectableUnits.Remove(gameObject);
             _isSelected = false;
             ToggleActionAssignment();
         }
@@ -43,7 +44,7 @@ namespace RTS
 
         public void SetPlayerOwner(PlayerInformation player)
         {
-            gameObject.GetComponent<Player>()._player = player;
+            if (_player == null) _player = player;
             SetupUnit();
         }
 
@@ -51,9 +52,9 @@ namespace RTS
         {
             get
             {
-                if (!GetComponent<Player>())
-                    gameObject.AddComponent<Player>()._player = GameManager.Default;
-                return GetComponent<Player>()._player;
+                if (_player == null)
+                    _player = GameManager.Default;
+                return _player;
             }
         }
 
@@ -76,10 +77,10 @@ namespace RTS
         private void SetupUnit()
         {
             _selectionController = FindObjectsOfType<SelectionController>()
-                .Where(s => s._player == PlayerOwner)
+                .Where(s => s.Player == PlayerOwner)
                 .FirstOrDefault();
             if (!_selectionController) return;
-            _selectionController._selectableUnits.Add(gameObject);
+            _selectionController.SelectableUnits.Add(gameObject);
             _actionController = _selectionController.GetComponent<ActionRelay>();
             _unitActionController = GetComponent<UnitActionController>();
             _selectionProjector = GetComponentInChildren<Projector>();
@@ -107,7 +108,7 @@ namespace RTS
         private void OnDrawGizmos()
         {
             if (PlayerOwner == null) return;
-            Gizmos.color = PlayerOwner._color;
+            Gizmos.color = PlayerOwner.Color;
             Gizmos.DrawWireSphere(transform.position, 1f);
         }
 

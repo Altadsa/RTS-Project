@@ -39,11 +39,11 @@ namespace RTS
             bool canAttack = (_actionCooldown >= _timeToAction) && IsWithinAttackRange();
             if (canAttack)
             {
-                if (_target.GetComponent<Player>()._player != GetComponent<Player>()._player)
-                { 
-                    _target.GetComponent<Health>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
-                    _actionCooldown = 0; 
-                }
+                //if (_target.GetComponent<Player>().PlayerInfo != _unit.PlayerOwner)
+                //{
+                //    _target.GetComponent<Health>().TakeDamage(_baseDamage * _meleeDmgModifier.Value);
+                //    _actionCooldown = 0;
+                //}
             }
         }
 
@@ -80,12 +80,12 @@ namespace RTS
         private void OnTriggerStay(Collider other)
         {
             if (_target || _agent.remainingDistance > 1) return;
-            PlayerInformation unitPlayer = other.GetComponent<Player>()._player;
-            if (unitPlayer == null) return;
-            if (unitPlayer != GetComponent<Player>()._player)
-            {
-                _target = other.gameObject;
-            }
+            //PlayerInformation unitPlayer = other.GetComponent<Player>().PlayerInfo;
+            //if (unitPlayer == null) return;
+            //if (unitPlayer != GetComponent<Player>().PlayerInfo)
+            //{
+            //    _target = other.gameObject;
+            //}
         }
 
     } 

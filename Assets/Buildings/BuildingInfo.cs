@@ -11,6 +11,7 @@ namespace RTS
         [SerializeField] GameObject[] _queuePositions;
         public Image _productionProgress;
         Building _lastBuilding;
+        ResourceData _playerResourceData;
         int _lastQueueSize = 0;
 
         private static BuildingInfo _instance;
@@ -30,6 +31,7 @@ namespace RTS
         public void LoadBuildingInfo(Building building)
         {
             building.UpdateInfo += UpdateInfo;
+            _playerResourceData = building.Player.ResourceData;
             if (building != _lastBuilding)
                 CreateQueueButtons(building);
         }
@@ -84,9 +86,9 @@ namespace RTS
 
         private void RefundCost(ResourceCost cost)
         {
-            ResourceData.AmendGold(cost.Gold);
-            ResourceData.AmendTimber(cost.Timber);
-            ResourceData.AmendFood(cost.Food);
+            _playerResourceData.AmendGold(cost.Gold);
+            _playerResourceData.AmendTimber(cost.Timber);
+            _playerResourceData.AmendFood(-cost.Food);
         }
 
         private void RemoveFromQueue(Building building, ProductionData dataToRemove)

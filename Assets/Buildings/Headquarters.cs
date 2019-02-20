@@ -7,12 +7,16 @@ namespace RTS
     public class Headquarters : MonoBehaviour, IDropoff
     {
         [SerializeField] private Transform _resourceDropOff;
+        Building _building;
+        ResourceData _resourceData;
 
         public Vector3 DropPoint => _resourceDropOff.position;
 
-        private void OnEnable()
+        private void Start()
         {
-            ResourceData.AmendMaxFood(12);   
+            _building = GetComponent<Building>();
+            _resourceData = _building.Player.ResourceData;
+            _resourceData.AmendMaxFood(12);   
         }
 
         public void DropResources(ResourceType resource, int amount)
@@ -20,10 +24,10 @@ namespace RTS
             switch (resource)
             {
                 case ResourceType.Gold:
-                    ResourceData.AmendGold(amount);
+                    _resourceData.AmendGold(amount);
                     break;
                 case ResourceType.Timber:
-                    ResourceData.AmendTimber(amount);
+                    _resourceData.AmendTimber(amount);
                     break;
             }
         }

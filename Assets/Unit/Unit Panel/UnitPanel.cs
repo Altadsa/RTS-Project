@@ -13,11 +13,11 @@ namespace RTS
         GraphicRaycaster _raycaster;
         PointerEventData _eventData;
         List<GameObject> selectedUnitsPanel = new List<GameObject>();
-        SelectionController _selectionController;
+        PlayerSelectionController _selectionController;
 
         private void Start()
         {
-            _selectionController = FindObjectOfType<SelectionController>();
+            _selectionController = FindObjectOfType<PlayerSelectionController>();
             _selectionController.updateSelectedUnits += UpdatePanel;
             _raycaster = GetComponent<GraphicRaycaster>();
         }
@@ -41,7 +41,7 @@ namespace RTS
             {
                 if (results[0].gameObject.transform != child) continue;
                 int index = child.GetSiblingIndex();
-                _selectionController.SelectUnitFromUI(_selectionController._selectedUnits[index]);
+                _selectionController.SelectUnitFromUI(_selectionController.SelectedUnits[index]);
                 return;
             }
         }

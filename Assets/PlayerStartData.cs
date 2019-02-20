@@ -11,9 +11,9 @@ namespace RTS
         public void SetupPlayerStart(PlayerInformation info)
         {
             GameObject hq = Instantiate(_headquarters);
-            hq.transform.position = info._startPos.position;
-            hq.AddComponent<Player>()._player = info;
-            Vector3 centreSpawn = info._startPos.position + (20 * Vector3.forward);
+            hq.transform.position = info.StartPos.position;
+            hq.GetComponent<Building>().SetPlayer(info);
+            Vector3 centreSpawn = info.StartPos.position + (20 * Vector3.forward);
             for (int i = 0; i < 5; i++)
             {
                 GameObject nUnit = Instantiate(_workerUnit);

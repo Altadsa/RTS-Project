@@ -14,7 +14,7 @@ namespace RTS
         public void OnProductionComplete(Building productionBuilding)
         {
             Transform unitParent = GameObject.FindGameObjectWithTag("Active Units").transform;
-            GameObject nUnit = Instantiate(_unit, productionBuilding.spawnPoint, Quaternion.identity, unitParent);
+            GameObject nUnit = Instantiate(_unit, productionBuilding.SpawnPoint, Quaternion.identity, unitParent);
             Debug.Log("Unit Built!");
         }
 

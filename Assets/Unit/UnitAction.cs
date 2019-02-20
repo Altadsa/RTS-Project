@@ -7,6 +7,7 @@ namespace RTS
     {
         protected NavMeshAgent _agent;
         protected GameObject _target;
+        protected Unit _unit;
         protected float _actionCooldown = 0;
         protected float _timeToAction = 2;
         protected float actionRange = 5;
@@ -16,6 +17,7 @@ namespace RTS
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _unit = GetComponent<Unit>();
         }
 
         public abstract bool IsTargetValid(GameObject target);

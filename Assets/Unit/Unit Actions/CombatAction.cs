@@ -42,9 +42,8 @@ namespace RTS
 
         bool IsTargetAttackable()
         {
-            PlayerInformation tPlayerInfo = _target.GetComponentInParent<Player>()._player;
-            PlayerInformation myPlayerInfo = GetComponent<Player>()._player;
-            if (tPlayerInfo != myPlayerInfo) return true;
+            Unit targetUnit = _target.GetComponent<Unit>();
+            if (targetUnit.PlayerOwner != _unit.PlayerOwner) return true;
             return false;
         }
 

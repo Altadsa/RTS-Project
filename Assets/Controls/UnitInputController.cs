@@ -25,12 +25,12 @@ namespace RTS
         private UnitRaycaster _raycaster;
         Vector3 _mousePos1, _mousePos2;
 
-        private SelectionController _selectionController;
+        private PlayerSelectionController _selectionController;
         private ActionRelay _actionController;
 
         private void Start()
         {
-            _selectionController = GetComponent<SelectionController>();
+            _selectionController = GetComponent<PlayerSelectionController>();
             _actionController = GetComponent<ActionRelay>();
         }
 

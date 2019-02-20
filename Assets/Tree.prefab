@@ -14,12 +14,13 @@ GameObject:
   - component: {fileID: 1647360540046830831}
   - component: {fileID: 3161163612855556937}
   - component: {fileID: 5970218316553956466}
+  - component: {fileID: 1889473482904405630}
   m_Layer: 12
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 3
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1647360540046830830
 Transform:
@@ -94,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gatherPoint: {fileID: 0}
+  _uiCanvas: {fileID: 0}
   _resourceType: 1
   _resourcesLeft: 50
   _loadWeight: 1
@@ -128,3 +130,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 2, z: 0}
   m_TimeToStationary: 0.5
+--- !u!54 &1889473482904405630
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647360540046830817}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

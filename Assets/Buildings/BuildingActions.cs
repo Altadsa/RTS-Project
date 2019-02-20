@@ -8,6 +8,7 @@ namespace RTS
     public class BuildingActions : MonoBehaviour
     {
         Building _building;
+        ResourceData _playerResourceData;
 
         [SerializeField] GameObject _actionButtonPrefab;
         [SerializeField] List<ProductionData> _data = new List<ProductionData>();
@@ -15,6 +16,7 @@ namespace RTS
         private void Start()
         {
             _building = GetComponent<Building>();
+            _playerResourceData = _building.Player.ResourceData;
         }
 
         public List<GameObject> CreateUnitButtons()
@@ -46,16 +48,16 @@ namespace RTS
             if (!canBuild) return;
             var dataToAdd = item as IQueueable;
             _building.AddToQueue(dataToAdd);
-            ResourceData.AmendGold(-cost.Gold);
-            ResourceData.AmendFood(cost.Food);
-            ResourceData.AmendTimber(-cost.Timber);
+            _playerResourceData.AmendGold(-cost.Gold);
+            _playerResourceData.AmendFood(cost.Food);
+            _playerResourceData.AmendTimber(-cost.Timber);
         }
 
         private bool CanBuy(ResourceCost cost)
         {
-            if (cost.Gold > ResourceData.Gold) return false;
-            if (cost.Timber > ResourceData.Timber) return false;
-            if ((cost.Food + ResourceData.Food) >= ResourceData.MaxFood) return false;
+            if (cost.Gold > _playerResourceData.Gold) return false;
+            if (cost.Timber > _playerResourceData.Timber) return false;
+            if ((cost.Food + _playerResourceData.Food) >= _playerResourceData.MaxFood) return false;
             return true;
         }
 

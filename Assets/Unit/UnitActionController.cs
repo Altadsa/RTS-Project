@@ -31,23 +31,19 @@ namespace RTS
             _unitActions = GetComponents<UnitAction>().ToList();
         }
 
+        private void Update()
+        {
+            Debug.Log(_unitActions.Count);
+        }
+
         public void Target(RaycastHit hit)
         {
-            //_agent.isStopped = false;
-            //GameObject hitGo = hit.collider.gameObject;
-            //if (hitGo.layer == _walkLayer)
-            //{
-            //    MoveToPoint(hit);
-            //}
-            //else
-            //{
-            //    _target = hitGo;
-            //}
             StartCoroutine(LookForValidAction(hit));
         }
 
         IEnumerator LookForValidAction(RaycastHit hit)
         {
+            //if (_unitActions.Count <= 0) yield return new WaitForSeconds(5);
             GameObject hitGo = hit.collider.gameObject;
             foreach (var action in _unitActions)
             {

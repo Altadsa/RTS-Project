@@ -8,15 +8,21 @@ namespace RTS
     {
         List<GameObject> targets = new List<GameObject>(10);
 
-        public float attackSpeed = 0.8f;
-        public float damage;
+        [SerializeField] float _attackSpeed = 0.8f;
+        [SerializeField] float _damage;
+        Building _building;
         float timeSinceAttack = 0;
+
+        private void Start()
+        {
+            _building = GetComponent<Building>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
             if (targets.Count >= targets.Capacity) return;
             if (targets.Contains(other.gameObject)) return;
-            if (other.GetComponent<Unit>().PlayerOwner == GetComponent<Player>()._player)
+            if (other.GetComponent<Unit>().PlayerOwner == _building.Player)
             { 
                 targets.Add(other.gameObject);
             }
@@ -36,7 +42,7 @@ namespace RTS
         {
             timeSinceAttack += Time.deltaTime;
             if (targets.Count <= 0) return;
-            bool canAttack = (timeSinceAttack > attackSpeed);
+            bool canAttack = (timeSinceAttack > _attackSpeed);
             if (canAttack)
             {
                 List<GameObject> deadTargets = new List<GameObject>();
@@ -49,7 +55,7 @@ namespace RTS
                     else
                     {
                         UnitHealth unitHealth = target.GetComponent<UnitHealth>();
-                        unitHealth.TakeDamage(damage);
+                        unitHealth.TakeDamage(_damage);
                     }
 
                 }

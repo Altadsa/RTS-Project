@@ -59,8 +59,8 @@ namespace RTS
         private void SetupBuildingInstance()
         {
             buildingInstance = Instantiate(_buildData.ConstructionPrefab);
-            buildingInstance.GetComponent<ConstructionBuilding>().Setup(_buildData.BuildingPrefab);
-            buildingInstance.AddComponent<Player>()._player = _playerToBuildFor;
+            ConstructionBuilding construction = GetComponent<ConstructionBuilding>();
+            construction.Setup(_buildData.BuildingPrefab, _playerToBuildFor);
             Transform parent = GameObject.FindGameObjectWithTag("Active Buildings").transform;
             buildingInstance.transform.SetParent(parent, true);
         }
@@ -108,10 +108,11 @@ namespace RTS
 
         private void AssignWorkerToBuilding()
         {
+            PlayerInformation player = buildingInstance.GetComponent<Building>().Player;
             var selected = FindObjectsOfType<SelectionController>()
-                .Where(s => s._player == buildingInstance.GetComponent<Player>()._player)
+                .Where(s => s.Player == player)
                 .FirstOrDefault();
-            UnitActionController unit = selected._selectedUnits
+            UnitActionController unit = selected.SelectedUnits
                 .Where(u => u.GetComponent<BuildAction>() == true)
                 .FirstOrDefault()
                 .GetComponent<UnitActionController>();

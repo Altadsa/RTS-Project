@@ -42,9 +42,7 @@ namespace RTS
 
         private bool IsBuildingValid()
         {
-            Player bPlayer = _building.GetComponent<Player>();
-            Player myPlayer = GetComponent<Player>();
-            if (bPlayer._player == myPlayer._player) return true;
+            if (_building.Player == _unit.PlayerOwner) return true;
             return false;
         }
     } 

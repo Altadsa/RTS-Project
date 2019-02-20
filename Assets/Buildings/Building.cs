@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 
 namespace RTS
 {
     [RequireComponent(typeof(BuildingActions))]
     public class Building : MonoBehaviour
     {
-        public Vector3 spawnPoint;
-        float _timeSpentBuilding = 0;
+        public Vector3 SpawnPoint;
         public List<IQueueable> Queue { get; private set; } = new List<IQueueable>();
 
+        float _timeSpentBuilding = 0;
         BuildingActions _actions;
+        PlayerInformation _player;
+        SelectionController _selectionController;
 
         public delegate void UpdateBuildingInfo(Building building, float buildPercent);
         public event UpdateBuildingInfo UpdateInfo;
@@ -21,7 +23,6 @@ namespace RTS
         {
             _actions = GetComponent<BuildingActions>();
             SetDefaultSpawnPoint();
-            if (!GetComponent<Player>()) gameObject.AddComponent<Player>()._player = GameManager.Default;
         }
 
         private void Update()
@@ -29,30 +30,19 @@ namespace RTS
             ProcessQueue();
         }
 
-        private void ProcessQueue()
+        public void SetPlayer(PlayerInformation player)
         {
-            if (Queue.Count > 0)
+            if (_player == null)
             {
-                _timeSpentBuilding += Time.deltaTime;
-                IQueueable firstItem = Queue[0];
-                float timeNeeded = firstItem.Time;
-                UpdateBuildInfo(timeNeeded);
-                if (_timeSpentBuilding >= timeNeeded)
-                {
-                    firstItem.OnProductionComplete(this);
-                    Queue.Remove(firstItem);
-                    if (Queue.Count <= 0) UpdateInfo(this, 0);
-                    _timeSpentBuilding = 0;
-                }
+                _player = player;
+                _selectionController = FindObjectsOfType<SelectionController>()
+                                        .Where(s => s.Player == _player)
+                                        .FirstOrDefault();
+                if (!_selectionController) return;
+                _selectionController.SelectableBuildings.Add(gameObject);
             }
         }
-
-        private void UpdateBuildInfo(float data)
-        {
-            if (UpdateInfo == null) return;
-            float progress = _timeSpentBuilding / data;
-            UpdateInfo(this, progress);
-        }
+        public PlayerInformation Player { get { return _player; } }
 
         public void AddToQueue(IQueueable data)
         {
@@ -94,6 +84,33 @@ namespace RTS
                 UpdateBuildInfo(0);
         }
 
+        private void ProcessQueue()
+        {
+            if (Queue.Count > 0)
+            {
+                _timeSpentBuilding += Time.deltaTime;
+                IQueueable firstItem = Queue[0];
+                float timeNeeded = firstItem.Time;
+                UpdateBuildInfo(timeNeeded);
+                if (_timeSpentBuilding >= timeNeeded)
+                {
+                    firstItem.OnProductionComplete(this);
+                    Queue.Remove(firstItem);
+                    if (Queue.Count <= 0) UpdateInfo(this, 0);
+                    _timeSpentBuilding = 0;
+                }
+            }
+        }
+
+        private void UpdateBuildInfo(float data)
+        {
+            if (UpdateInfo == null) return;
+            float progress = _timeSpentBuilding / data;
+            UpdateInfo(this, progress);
+        }
+
+
+
         private void SetupButtons()
         {
             UserInterface.Instance.LoadMenuButtons(_actions.CreateUnitButtons());
@@ -107,7 +124,7 @@ namespace RTS
 
         private void SetDefaultSpawnPoint()
         {
-            spawnPoint = (transform.forward * 5) + transform.position;
+            SpawnPoint = (transform.forward * 5) + transform.position;
         }
 
     }

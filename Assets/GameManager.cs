@@ -6,18 +6,47 @@ namespace RTS
 {
     public class GameManager : MonoBehaviour
     {
-        public List<PlayerInformation> _players = new List<PlayerInformation>();
-        public PlayerStartData _defaultStartData;
+        public GameObject PlayerController;
+        public GameObject AiController;
+        public List<PlayerInformation> Players = new List<PlayerInformation>();
+        public PlayerStartData DefaultStartData;
         public static PlayerInformation Default = null;
 
         private void Awake()
         {
-            foreach (var player in _players)
+            foreach (var player in Players)
             {
-                if (!player._isAi && Default == null) { Default = player; FindObjectOfType<SelectionController>()._player = player; }
-                _defaultStartData.SetupPlayerStart(player);
+                if (player.IsAi)
+                    CreateNewAiPlayer(player);
+                else
+                    CreateDefaultPlayer(player);
+                DefaultStartData.SetupPlayerStart(player);
             }
         }
 
+        private void CreateNewAiPlayer(PlayerInformation player)
+        {
+            GameObject aiController = Instantiate(AiController);
+            aiController.GetComponentInChildren<SelectionController>().SetPlayer(player);
+        }
+
+        private void CreateDefaultPlayer(PlayerInformation player)
+        {
+            GameObject playerController = Instantiate(PlayerController);
+            playerController.GetComponentInChildren<SelectionController>().SetPlayer(player);
+            if (Default == null)
+            {
+                Default = player;
+            }
+        }
+
+
+        private static void SetDefaultPlayer(PlayerInformation player)
+        {
+            if (!player.IsAi && Default == null)
+            {
+                Default = player;
+            }//FindObjectOfType<SelectionController>()._player = player; }
+        }
     } 
 }
