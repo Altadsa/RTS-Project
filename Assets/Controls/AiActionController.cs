@@ -24,7 +24,7 @@ namespace RTS
             if(t)
             {
                 _layerHit = hit;
-                AssignAction();
+                SetAction();
             }
 
 

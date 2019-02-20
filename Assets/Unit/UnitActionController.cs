@@ -31,11 +31,6 @@ namespace RTS
             _unitActions = GetComponents<UnitAction>().ToList();
         }
 
-        private void Update()
-        {
-            Debug.Log(_unitActions.Count);
-        }
-
         public void Target(RaycastHit hit)
         {
             StartCoroutine(LookForValidAction(hit));
@@ -43,7 +38,6 @@ namespace RTS
 
         IEnumerator LookForValidAction(RaycastHit hit)
         {
-            //if (_unitActions.Count <= 0) yield return new WaitForSeconds(5);
             GameObject hitGo = hit.collider.gameObject;
             foreach (var action in _unitActions)
             {

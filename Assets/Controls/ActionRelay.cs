@@ -6,17 +6,17 @@ namespace RTS
     {
         protected RaycastHit _layerHit;
         public delegate void UnitAction(RaycastHit targetHit);
-        public event UnitAction assignAction;
+        public event UnitAction AssignAction;
 
-        public void AssignAction()
+        public void SetAction()
         {
-            if (assignAction == null) { return; }
-            assignAction(_layerHit);
+            if (AssignAction == null) { return; }
+            AssignAction(_layerHit);
         }
 
         protected bool Foo()
         {
-            return assignAction == null;
+            return AssignAction == null;
         }
 
     } 

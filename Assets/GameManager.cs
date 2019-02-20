@@ -34,6 +34,7 @@ namespace RTS
         {
             GameObject playerController = Instantiate(PlayerController);
             playerController.GetComponentInChildren<SelectionController>().SetPlayer(player);
+            playerController.transform.position = player.StartPos.position;
             if (Default == null)
             {
                 Default = player;

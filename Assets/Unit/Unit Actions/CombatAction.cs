@@ -12,7 +12,6 @@ namespace RTS
         public override bool IsTargetValid(GameObject target)
         {
             StopAllCoroutines();
-            if (!target.GetComponentInParent<Health>()) return false;
             _target = target;
             if (!IsTargetAttackable()) return false;
             StartCoroutine(AttackTarget());
@@ -21,17 +20,20 @@ namespace RTS
 
         IEnumerator AttackTarget()
         {
-            Vector3 targetPos = _target.transform.position;
-            _agent.SetDestination(targetPos);
-            while (DistanceToTarget(targetPos) > actionRange)
-            {
-                yield return new WaitForEndOfFrame();
-            }
             Health targetHealth = _target.GetComponentInParent<Health>();
             while (targetHealth)
             {
-                targetHealth.TakeDamage(Damage);
-                yield return new WaitForSeconds(_timeToAction);
+                yield return new WaitForEndOfFrame();
+                Vector3 targetPos = _target.transform.position;
+                _agent.isStopped = false;
+                _agent.SetDestination(targetPos);
+                if (DistanceToTarget(targetPos) <= actionRange)
+                {
+                    _agent.isStopped = true;
+                    targetHealth.TakeDamage(Damage);
+                    yield return new WaitForSeconds(_timeToAction);
+                }
+                else continue;
             }
         }
 
@@ -42,8 +44,10 @@ namespace RTS
 
         bool IsTargetAttackable()
         {
-            Unit targetUnit = _target.GetComponent<Unit>();
-            if (targetUnit.PlayerOwner != _unit.PlayerOwner) return true;
+            Unit targetUnit = _target.GetComponentInParent<Unit>();
+            bool hasHealth = _target.GetComponentInParent<Health>();
+            bool isNotPlayer = targetUnit.PlayerOwner != _unit.PlayerOwner;
+            if (hasHealth && isNotPlayer) return true;
             return false;
         }
 

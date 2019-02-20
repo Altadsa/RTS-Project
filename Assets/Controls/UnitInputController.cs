@@ -58,7 +58,7 @@ namespace RTS
 
             if (Input.GetMouseButtonDown(1))
             {
-                _actionController.AssignAction();
+                _actionController.SetAction();
             }
         }
         

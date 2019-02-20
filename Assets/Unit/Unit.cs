@@ -99,9 +99,9 @@ namespace RTS
         private void ToggleActionAssignment()
         {
             if (_isSelected)
-                _actionController.assignAction += OnActionAssigned;
+                _actionController.AssignAction += OnActionAssigned;
             else
-                _actionController.assignAction -= OnActionAssigned;
+                _actionController.AssignAction -= OnActionAssigned;
         }
         #endregion
 

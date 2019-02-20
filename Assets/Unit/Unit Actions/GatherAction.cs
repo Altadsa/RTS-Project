@@ -10,7 +10,6 @@ namespace RTS
         Resource _resource;
         Transform _resourceParent;
         ResourceType _resourceToWork;
-        bool _isDroppingResources = false;
         Vector3 _gatherPoint;
         int _resourceAmount = 0;
         float _currentCarryLoad = 0, _maxCarryLoad = 5;
@@ -64,6 +63,7 @@ namespace RTS
         IEnumerator GatherResource(Resource resource)
         {
              _resourceParent = resource.transform.parent;
+            _agent.isStopped = false;
             _agent.SetDestination(_gatherPoint);
             while (DistanceToTarget(_gatherPoint) > actionRange)
             {
@@ -75,7 +75,8 @@ namespace RTS
                 yield return new WaitForSeconds(_timeToAction);
                 if (!_resource) { FindNewResource(); yield break; }
                 Gather(resource);
-                _actionCooldown = 0; 
+                _actionCooldown = 0;
+                _agent.isStopped = true;
             }
             StartCoroutine(DropOffResources());
         }
@@ -104,6 +105,7 @@ namespace RTS
 
         IEnumerator DropOffResources()
         {
+            _agent.isStopped = false;
             _agent.SetDestination(_dropoff.DropPoint);
             while (DistanceToTarget(_dropoff.DropPoint) > actionRange)
             {
@@ -122,7 +124,6 @@ namespace RTS
         {
             _resourceAmount = 0;
             _currentCarryLoad = 0;
-            _isDroppingResources = false;
             StartCoroutine(GatherResource(_resource));
         }
 
